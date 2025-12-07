@@ -1,0 +1,9 @@
+# Eiffel compilation artifacts
+EIFGENs/
+*.lock
+
+# Log files
+*.log
+
+# Resource files (generated)
+*.rc
