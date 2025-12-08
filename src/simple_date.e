@@ -170,7 +170,6 @@ feature -- Access
 	week_of_year: INTEGER
 			-- ISO 8601 week number (1-53).
 		local
-			l_jan1_dow: INTEGER
 			l_days: INTEGER
 		do
 			-- Simplified ISO week calculation

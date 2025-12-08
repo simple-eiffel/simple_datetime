@@ -1,6 +1,6 @@
 note
 	description: "Test set for simple_datetime"
-	testing: "type/manual"
+	testing: "covers"
 
 class
 	SIMPLE_DATETIME_TEST_SET

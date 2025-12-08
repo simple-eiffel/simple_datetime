@@ -68,7 +68,7 @@ feature {NONE} -- Initialization
 		local
 			l_hour, l_minute, l_second: INTEGER
 			l_parts: LIST [STRING]
-			l_str, l_time_part: STRING
+			l_str: STRING
 			l_is_pm: BOOLEAN
 		do
 			l_str := a_string.twin
