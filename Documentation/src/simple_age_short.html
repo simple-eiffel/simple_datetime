@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="TTSimple Age - Specialized class for age calculation.  TTProvides accurate age calculation in years, months, and days, TThandling edge cases like leap years and varying month lengths.  TTThis is an innovative feature not commonly found in datetime TTlibraries - most force developers to calculate age manually.  TTExample: TTTbirthdate := create {SIMPLE_DATE}.make (1990, 3, 15) TTTage := create {SIMPLE_AGE}.make_from_dates (birthdate, today) TTTprint (age.years)           -- 35 TTTprint (age.to_string)       -- 35 years, 8 months, 22 days TTTprint (age.is_adult)        -- True"/>
+<meta name="author" content="Larry Rix"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>simple_age Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="simple_age_chart.html">Chart</a>
+<a class="nav class" href="simple_age_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="simple_age"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">		Simple Age - Specialized class for age calculation.</span>
+		
+		<span class="estring">		Provides accurate age calculation in years, months, and days,</span>
+		<span class="estring">		handling edge cases like leap years and varying month lengths.</span>
+		
+		<span class="estring">		This is an innovative feature not commonly found in datetime</span>
+		<span class="estring">		libraries - most force developers to calculate age manually.</span>
+		
+		<span class="estring">		Example:</span>
+		<span class="estring">			birthdate := create </span><span class="esymbol">{</span><a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a><span class="esymbol">}</span><span class="edot">.</span><a class="efeature" href="../src/simple_date_short.html#f_make">make</a><span class="estring"> (1990, 3, 15)</span>
+		<span class="estring">			age := create </span><span class="esymbol">{</span><a class="eclass" href="../src/simple_age_short.html">SIMPLE_AGE</a><span class="esymbol">}</span><span class="edot">.</span><a class="efeature" href="../src/simple_age_short.html#f_make_from_dates">make_from_dates</a><span class="estring"> (birthdate, today)</span>
+		<span class="estring">			print (age.years) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- 35</span>
+		<span class="estring">			print (age.to_string) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- &quot;35 years, 8 months, 22 days&quot;</span>
+		<span class="estring">			print (age.is_adult) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- True</span>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+	<span class="eitag">author</span><span class="esymbol">:</span> <span class="estring">&quot;Larry Rix&quot;</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../src/simple_age_short.html">SIMPLE_AGE</a>
+
+<span class="ekeyword">create</span> 
+	<a class="efeature" href="../src/simple_age_short.html#f_make_from_dates">make_from_dates</a><span class="esymbol">,</span>
+	<a class="efeature" href="../src/simple_age_short.html#f_make_from_birthdate">make_from_birthdate</a><span class="esymbol">,</span>
+	<a class="efeature" href="../src/simple_age_short.html#f_make">make</a>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access: Components</span>
+
+	<a name="f_years"></a><a class="efeature" href="../src/simple_age_short.html#f_years">years</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Number of complete years.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">non_negative</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+
+	<a name="f_months"></a><a class="efeature" href="../src/simple_age_short.html#f_months">months</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Number of complete months (0-11).</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">valid_range</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="ekeyword">Result</span> <a class="esymbol" href="../base/integer_32_short.html#f_is_less">&lt;</a> <span class="enumber">12</span>
+
+	<a name="f_days"></a><a class="efeature" href="../src/simple_age_short.html#f_days">days</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Number of remaining days (0-30).</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">valid_range</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="ekeyword">Result</span> <a class="esymbol" href="../base/integer_32_short.html#f_is_less">&lt;</a> <span class="enumber">31</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access: Totals</span>
+
+	<a name="f_total_months"></a><a class="efeature" href="../src/simple_age_short.html#f_total_months">total_months</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Total months (years * 12 + months).</span>
+
+	<a name="f_total_days"></a><a class="efeature" href="../src/simple_age_short.html#f_total_days">total_days</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Approximate total days.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Note: Uses 365.25 days/year, 30.44 days/month for approximation.</span>
+
+	<a name="f_total_weeks"></a><a class="efeature" href="../src/simple_age_short.html#f_total_weeks">total_weeks</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Approximate total weeks.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access: Dates</span>
+
+	<a name="f_start_date"></a><a class="efeature" href="../src/simple_age_short.html#f_start_date">start_date</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Start date (e.g., birthdate).</span>
+
+	<a name="f_end_date"></a><a class="efeature" href="../src/simple_age_short.html#f_end_date">end_date</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> End date (e.g., current date).</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status: Legal Age Thresholds</span>
+
+	<a name="f_is_adult"></a><a class="efeature" href="../src/simple_age_short.html#f_is_adult">is_adult</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is this age 18 or older? (Common legal adult threshold)</span>
+
+	<a name="f_is_minor"></a><a class="efeature" href="../src/simple_age_short.html#f_is_minor">is_minor</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is this age under 18?</span>
+
+	<a name="f_is_senior"></a><a class="efeature" href="../src/simple_age_short.html#f_is_senior">is_senior</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is this age 65 or older? (Common senior threshold)</span>
+
+	<a name="f_is_teen"></a><a class="efeature" href="../src/simple_age_short.html#f_is_teen">is_teen</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is this age between 13 and 19?</span>
+
+	<a name="f_is_child"></a><a class="efeature" href="../src/simple_age_short.html#f_is_child">is_child</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is this age under 13?</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status: Custom Thresholds</span>
+
+	<a name="f_is_at_least"></a><a class="efeature" href="../src/simple_age_short.html#f_is_at_least">is_at_least</a> <span class="esymbol">(</span><span class="elocal">a_years</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is this age at least </span><span class="equoted">a_years</span><span class="ecomment"> years?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">years_non_negative</span><span class="esymbol">:</span> <span class="elocal">a_years</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+
+	<a name="f_is_under"></a><a class="efeature" href="../src/simple_age_short.html#f_is_under">is_under</a> <span class="esymbol">(</span><span class="elocal">a_years</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is this age under </span><span class="equoted">a_years</span><span class="ecomment"> years?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">years_positive</span><span class="esymbol">:</span> <span class="elocal">a_years</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater">&gt;</a> <span class="enumber">0</span>
+
+	<a name="f_is_between"></a><a class="efeature" href="../src/simple_age_short.html#f_is_between">is_between</a> <span class="esymbol">(</span><span class="elocal">a_min_years</span><span class="esymbol">,</span> <span class="elocal">a_max_years</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is this age between </span><span class="equoted">a_min_years</span><span class="ecomment"> and </span><span class="equoted">a_max_years</span><span class="ecomment"> (inclusive)?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">valid_range</span><span class="esymbol">:</span> <span class="elocal">a_min_years</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="elocal">a_max_years</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Output</span>
+
+	<a name="f_to_string"></a><a class="efeature" href="../src/simple_age_short.html#f_to_string">to_string</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Full representation: &quot;25 years, 3 months, 14 days&quot;</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_to_short"></a><a class="efeature" href="../src/simple_age_short.html#f_to_short">to_short</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Short representation: &quot;25y 3m 14d&quot;</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_to_years_only"></a><a class="efeature" href="../src/simple_age_short.html#f_to_years_only">to_years_only</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Years only: &quot;25 years&quot; or &quot;25 years old&quot;</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_to_human"></a><a class="efeature" href="../src/simple_age_short.html#f_to_human">to_human</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Human-friendly approximation: &quot;25 years old&quot;, &quot;6 months old&quot;, &quot;2 weeks old&quot;</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_out"></a><a class="efeature" href="../src/simple_age_short.html#f_out">out</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Default string representation.</span>
+	
+<span class="ekeyword">invariant</span>
+	<span class="etag">years_non_negative</span><span class="esymbol">:</span> <a class="efeature" href="../src/simple_age_short.html#f_years">years</a> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+	<span class="etag">months_valid</span><span class="esymbol">:</span> <a class="efeature" href="../src/simple_age_short.html#f_months">months</a> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <a class="efeature" href="../src/simple_age_short.html#f_months">months</a> <a class="esymbol" href="../base/integer_32_short.html#f_is_less">&lt;</a> <span class="enumber">12</span>
+	<span class="etag">days_valid</span><span class="esymbol">:</span> <a class="efeature" href="../src/simple_age_short.html#f_days">days</a> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <a class="efeature" href="../src/simple_age_short.html#f_days">days</a> <a class="esymbol" href="../base/integer_32_short.html#f_is_less">&lt;</a> <span class="enumber">31</span>
+	<span class="etag">start_date_attached</span><span class="esymbol">:</span> <a class="efeature" href="../src/simple_age_short.html#f_start_date">start_date</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	<span class="etag">end_date_attached</span><span class="esymbol">:</span> <a class="efeature" href="../src/simple_age_short.html#f_end_date">end_date</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../src/simple_age_short.html">SIMPLE_AGE</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="simple_age_chart.html">Chart</a>
+<a class="nav class" href="simple_age_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="simple_age"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

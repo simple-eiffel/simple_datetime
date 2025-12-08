@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="TTSimple DateTime - High-level facade for date/time operations.  TTProvides factory methods, parsing, and convenience features. TTWraps EiffelStudio's TIME library with a cleaner, fluent API.  TTFeatures: TT- Factory methods: now, today, date, time, datetime TT- Smart parsing: automatically detects common formats TT- Relative dates: next_monday, last_friday, etc. TT- Human-friendly output: time_ago, time_until TT- Business day support TT- Age calculation  TTExample: TTTcreate dt.make TTTtoday := dt.today TTTnext_week := dt.today.plus_days (7) TTTage := dt.age_from (birthdate)"/>
+<meta name="author" content="Larry Rix"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>simple_datetime Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="simple_datetime_chart.html">Chart</a>
+<a class="nav class" href="simple_datetime_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="simple_datetime"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">		Simple DateTime - High-level facade for date/time operations.</span>
+		
+		<span class="estring">		Provides factory methods, parsing, and convenience features.</span>
+		<span class="estring">		Wraps EiffelStudio's TIME library with a cleaner, fluent API.</span>
+		
+		<span class="estring">		Features:</span>
+		<span class="estring">		- Factory methods: now, today, date, time, datetime</span>
+		<span class="estring">		- Smart parsing: automatically detects common formats</span>
+		<span class="estring">		- Relative dates: next_monday, last_friday, etc.</span>
+		<span class="estring">		- Human-friendly output: time_ago, time_until</span>
+		<span class="estring">		- Business day support</span>
+		<span class="estring">		- Age calculation</span>
+		
+		<span class="estring">		Example:</span>
+		<span class="estring">			create dt.make</span>
+		<span class="estring">			today := dt.today</span>
+		<span class="estring">			next_week := dt.today.plus_days (7)</span>
+		<span class="estring">			age := dt.age_from (birthdate)</span>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+	<span class="eitag">author</span><span class="esymbol">:</span> <span class="estring">&quot;Larry Rix&quot;</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../src/simple_datetime_short.html">SIMPLE_DATETIME</a>
+
+<span class="ekeyword">create</span> 
+	<a class="efeature" href="../src/simple_datetime_short.html#f_make">make</a>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Factory: Current Time</span>
+
+	<a name="f_now"></a><a class="efeature" href="../src/simple_datetime_short.html#f_now">now</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_time_short.html">SIMPLE_DATE_TIME</a>
+			<span class="ecomment">--</span><span class="ecomment"> Current date and time in local timezone.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_utc_now"></a><a class="efeature" href="../src/simple_datetime_short.html#f_utc_now">utc_now</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_time_short.html">SIMPLE_DATE_TIME</a>
+			<span class="ecomment">--</span><span class="ecomment"> Current date and time in UTC.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_today"></a><a class="efeature" href="../src/simple_datetime_short.html#f_today">today</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Today's date.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_tomorrow"></a><a class="efeature" href="../src/simple_datetime_short.html#f_tomorrow">tomorrow</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Tomorrow's date.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_yesterday"></a><a class="efeature" href="../src/simple_datetime_short.html#f_yesterday">yesterday</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Yesterday's date.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Factory: Creation</span>
+
+	<a name="f_date"></a><a class="efeature" href="../src/simple_datetime_short.html#f_date">date</a> <span class="esymbol">(</span><span class="elocal">a_year</span><span class="esymbol">,</span> <span class="elocal">a_month</span><span class="esymbol">,</span> <span class="elocal">a_day</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Create date from components.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">valid_month</span><span class="esymbol">:</span> <span class="elocal">a_month</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">1</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="elocal">a_month</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="enumber">12</span>
+			<span class="etag">valid_day</span><span class="esymbol">:</span> <span class="elocal">a_day</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">1</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="elocal">a_day</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="enumber">31</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">year_set</span><span class="esymbol">:</span> <span class="ekeyword">Result</span><span class="edot">.</span><a class="efeature" href="../src/simple_date_short.html#f_year">year</a> <span class="esymbol">=</span> <span class="elocal">a_year</span>
+			<span class="etag">month_set</span><span class="esymbol">:</span> <span class="ekeyword">Result</span><span class="edot">.</span><a class="efeature" href="../src/simple_date_short.html#f_month">month</a> <span class="esymbol">=</span> <span class="elocal">a_month</span>
+			<span class="etag">day_set</span><span class="esymbol">:</span> <span class="ekeyword">Result</span><span class="edot">.</span><a class="efeature" href="../src/simple_date_short.html#f_day">day</a> <span class="esymbol">=</span> <span class="elocal">a_day</span>
+
+	<a name="f_time"></a><a class="efeature" href="../src/simple_datetime_short.html#f_time">time</a> <span class="esymbol">(</span><span class="elocal">a_hour</span><span class="esymbol">,</span> <span class="elocal">a_minute</span><span class="esymbol">,</span> <span class="elocal">a_second</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_time_short.html">SIMPLE_TIME</a>
+			<span class="ecomment">--</span><span class="ecomment"> Create time from components.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">valid_hour</span><span class="esymbol">:</span> <span class="elocal">a_hour</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="elocal">a_hour</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="enumber">23</span>
+			<span class="etag">valid_minute</span><span class="esymbol">:</span> <span class="elocal">a_minute</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="elocal">a_minute</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="enumber">59</span>
+			<span class="etag">valid_second</span><span class="esymbol">:</span> <span class="elocal">a_second</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="elocal">a_second</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="enumber">59</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">hour_set</span><span class="esymbol">:</span> <span class="ekeyword">Result</span><span class="edot">.</span><a class="efeature" href="../src/simple_time_short.html#f_hour">hour</a> <span class="esymbol">=</span> <span class="elocal">a_hour</span>
+			<span class="etag">minute_set</span><span class="esymbol">:</span> <span class="ekeyword">Result</span><span class="edot">.</span><a class="efeature" href="../src/simple_time_short.html#f_minute">minute</a> <span class="esymbol">=</span> <span class="elocal">a_minute</span>
+			<span class="etag">second_set</span><span class="esymbol">:</span> <span class="ekeyword">Result</span><span class="edot">.</span><a class="efeature" href="../src/simple_time_short.html#f_second">second</a> <span class="esymbol">=</span> <span class="elocal">a_second</span>
+
+	<a name="f_datetime"></a><a class="efeature" href="../src/simple_datetime_short.html#f_datetime">datetime</a> <span class="esymbol">(</span><span class="elocal">a_year</span><span class="esymbol">,</span> <span class="elocal">a_month</span><span class="esymbol">,</span> <span class="elocal">a_day</span><span class="esymbol">,</span> <span class="elocal">a_hour</span><span class="esymbol">,</span> <span class="elocal">a_minute</span><span class="esymbol">,</span> <span class="elocal">a_second</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_time_short.html">SIMPLE_DATE_TIME</a>
+			<span class="ecomment">--</span><span class="ecomment"> Create datetime from components.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">valid_month</span><span class="esymbol">:</span> <span class="elocal">a_month</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">1</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="elocal">a_month</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="enumber">12</span>
+			<span class="etag">valid_day</span><span class="esymbol">:</span> <span class="elocal">a_day</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">1</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="elocal">a_day</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="enumber">31</span>
+			<span class="etag">valid_hour</span><span class="esymbol">:</span> <span class="elocal">a_hour</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="elocal">a_hour</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="enumber">23</span>
+			<span class="etag">valid_minute</span><span class="esymbol">:</span> <span class="elocal">a_minute</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="elocal">a_minute</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="enumber">59</span>
+			<span class="etag">valid_second</span><span class="esymbol">:</span> <span class="elocal">a_second</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="elocal">a_second</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="enumber">59</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Factory: From Timestamp</span>
+
+	<a name="f_from_timestamp"></a><a class="efeature" href="../src/simple_datetime_short.html#f_from_timestamp">from_timestamp</a> <span class="esymbol">(</span><span class="elocal">a_unix_timestamp</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_64_short.html">INTEGER_64</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_time_short.html">SIMPLE_DATE_TIME</a>
+			<span class="ecomment">--</span><span class="ecomment"> Create datetime from Unix timestamp (seconds since 1970-01-01).</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Parsing</span>
+
+	<a name="f_parse_date"></a><a class="efeature" href="../src/simple_datetime_short.html#f_parse_date">parse_date</a> <span class="esymbol">(</span><span class="elocal">a_string</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Parse date from string, trying common formats.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Supports: YYYY-MM-DD, MM/DD/YYYY, DD.MM.YYYY</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">string_not_empty</span><span class="esymbol">:</span> <span class="elocal">a_string</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted_semistrict">and then</a> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">a_string</span><span class="edot">.</span><a class="efeature" href="../base/finite_short.html#f_is_empty">is_empty</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_parse_datetime"></a><a class="efeature" href="../src/simple_datetime_short.html#f_parse_datetime">parse_datetime</a> <span class="esymbol">(</span><span class="elocal">a_string</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_time_short.html">SIMPLE_DATE_TIME</a>
+			<span class="ecomment">--</span><span class="ecomment"> Parse datetime from string, trying common formats.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Supports: ISO 8601 and common variants</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">string_not_empty</span><span class="esymbol">:</span> <span class="elocal">a_string</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted_semistrict">and then</a> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">a_string</span><span class="edot">.</span><a class="efeature" href="../base/finite_short.html#f_is_empty">is_empty</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_parse_iso8601"></a><a class="efeature" href="../src/simple_datetime_short.html#f_parse_iso8601">parse_iso8601</a> <span class="esymbol">(</span><span class="elocal">a_string</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_time_short.html">SIMPLE_DATE_TIME</a>
+			<span class="ecomment">--</span><span class="ecomment"> Parse ISO 8601 formatted datetime.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Format: YYYY-MM-DDTHH:MM:SS or YYYY-MM-DDTHH:MM:SSZ</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">string_not_empty</span><span class="esymbol">:</span> <span class="elocal">a_string</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted_semistrict">and then</a> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">a_string</span><span class="edot">.</span><a class="efeature" href="../base/finite_short.html#f_is_empty">is_empty</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Relative Dates (Innovative!)</span>
+
+	<a name="f_next_monday"></a><a class="efeature" href="../src/simple_datetime_short.html#f_next_monday">next_monday</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Next Monday from today.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">is_monday</span><span class="esymbol">:</span> <span class="ekeyword">Result</span><span class="edot">.</span><a class="efeature" href="../src/simple_date_short.html#f_day_of_week">day_of_week</a> <span class="esymbol">=</span> <span class="enumber">1</span>
+
+	<a name="f_next_tuesday"></a><a class="efeature" href="../src/simple_datetime_short.html#f_next_tuesday">next_tuesday</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Next Tuesday from today.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_next_wednesday"></a><a class="efeature" href="../src/simple_datetime_short.html#f_next_wednesday">next_wednesday</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Next Wednesday from today.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_next_thursday"></a><a class="efeature" href="../src/simple_datetime_short.html#f_next_thursday">next_thursday</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Next Thursday from today.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_next_friday"></a><a class="efeature" href="../src/simple_datetime_short.html#f_next_friday">next_friday</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Next Friday from today.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_last_monday"></a><a class="efeature" href="../src/simple_datetime_short.html#f_last_monday">last_monday</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Last Monday (most recent past Monday).</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_last_friday"></a><a class="efeature" href="../src/simple_datetime_short.html#f_last_friday">last_friday</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Last Friday (most recent past Friday).</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_first_of_month"></a><a class="efeature" href="../src/simple_datetime_short.html#f_first_of_month">first_of_month</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> First day of current month.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">is_first</span><span class="esymbol">:</span> <span class="ekeyword">Result</span><span class="edot">.</span><a class="efeature" href="../src/simple_date_short.html#f_day">day</a> <span class="esymbol">=</span> <span class="enumber">1</span>
+
+	<a name="f_last_of_month"></a><a class="efeature" href="../src/simple_datetime_short.html#f_last_of_month">last_of_month</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Last day of current month.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_first_of_next_month"></a><a class="efeature" href="../src/simple_datetime_short.html#f_first_of_next_month">first_of_next_month</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> First day of next month.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_first_of_year"></a><a class="efeature" href="../src/simple_datetime_short.html#f_first_of_year">first_of_year</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> First day of current year.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">is_january_first</span><span class="esymbol">:</span> <span class="ekeyword">Result</span><span class="edot">.</span><a class="efeature" href="../src/simple_date_short.html#f_month">month</a> <span class="esymbol">=</span> <span class="enumber">1</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="ekeyword">Result</span><span class="edot">.</span><a class="efeature" href="../src/simple_date_short.html#f_day">day</a> <span class="esymbol">=</span> <span class="enumber">1</span>
+
+	<a name="f_last_of_year"></a><a class="efeature" href="../src/simple_datetime_short.html#f_last_of_year">last_of_year</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Last day of current year.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">is_december_31</span><span class="esymbol">:</span> <span class="ekeyword">Result</span><span class="edot">.</span><a class="efeature" href="../src/simple_date_short.html#f_month">month</a> <span class="esymbol">=</span> <span class="enumber">12</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="ekeyword">Result</span><span class="edot">.</span><a class="efeature" href="../src/simple_date_short.html#f_day">day</a> <span class="esymbol">=</span> <span class="enumber">31</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Age Calculation (Innovative!)</span>
+
+	<a name="f_age_from"></a><a class="efeature" href="../src/simple_datetime_short.html#f_age_from">age_from</a> <span class="esymbol">(</span><span class="elocal">a_birthdate</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_age_short.html">SIMPLE_AGE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Calculate age from birthdate to today.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">birthdate_not_void</span><span class="esymbol">:</span> <span class="elocal">a_birthdate</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">birthdate_in_past</span><span class="esymbol">:</span> <span class="elocal">a_birthdate</span><span class="edot">.</span><a class="efeature" href="../src/simple_date_short.html#f_is_before">is_before</a><span class="esymbol"> </span><span class="esymbol">(</span><a class="efeature" href="../src/simple_datetime_short.html#f_today">today</a><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <span class="elocal">a_birthdate</span><span class="edot">.</span><a class="efeature" href="../src/simple_date_short.html#f_is_equal">is_equal</a><span class="esymbol"> </span><span class="esymbol">(</span><a class="efeature" href="../src/simple_datetime_short.html#f_today">today</a><span class="esymbol">)</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_age_between"></a><a class="efeature" href="../src/simple_datetime_short.html#f_age_between">age_between</a> <span class="esymbol">(</span><span class="elocal">a_start</span><span class="esymbol">,</span> <span class="elocal">a_end</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_age_short.html">SIMPLE_AGE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Calculate age/duration between two dates.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">start_not_void</span><span class="esymbol">:</span> <span class="elocal">a_start</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">end_not_void</span><span class="esymbol">:</span> <span class="elocal">a_end</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">start_before_end</span><span class="esymbol">:</span> <span class="elocal">a_start</span><span class="edot">.</span><a class="efeature" href="../src/simple_date_short.html#f_is_before">is_before</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">a_end</span><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <span class="elocal">a_start</span><span class="edot">.</span><a class="efeature" href="../src/simple_date_short.html#f_is_equal">is_equal</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">a_end</span><span class="esymbol">)</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Business Days (Innovative!)</span>
+
+	<a name="f_add_business_days"></a><a class="efeature" href="../src/simple_datetime_short.html#f_add_business_days">add_business_days</a> <span class="esymbol">(</span><span class="elocal">a_date</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a><span class="esymbol">;</span> <span class="elocal">a_days</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Add </span><span class="equoted">a_days</span><span class="ecomment"> business days to </span><span class="equoted">a_date</span><span class="ecomment"> (skipping weekends).</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">date_not_void</span><span class="esymbol">:</span> <span class="elocal">a_date</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">days_positive</span><span class="esymbol">:</span> <span class="elocal">a_days</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_business_days_between"></a><a class="efeature" href="../src/simple_datetime_short.html#f_business_days_between">business_days_between</a> <span class="esymbol">(</span><span class="elocal">a_start</span><span class="esymbol">,</span> <span class="elocal">a_end</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Count business days between two dates.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">start_not_void</span><span class="esymbol">:</span> <span class="elocal">a_start</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">end_not_void</span><span class="esymbol">:</span> <span class="elocal">a_end</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_is_business_day"></a><a class="efeature" href="../src/simple_datetime_short.html#f_is_business_day">is_business_day</a> <span class="esymbol">(</span><span class="elocal">a_date</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is </span><span class="equoted">a_date</span><span class="ecomment"> a business day (weekday)?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">date_not_void</span><span class="esymbol">:</span> <span class="elocal">a_date</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_next_business_day"></a><a class="efeature" href="../src/simple_datetime_short.html#f_next_business_day">next_business_day</a> <span class="esymbol">(</span><span class="elocal">a_date</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Next business day after </span><span class="equoted">a_date</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">date_not_void</span><span class="esymbol">:</span> <span class="elocal">a_date</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">is_weekday</span><span class="esymbol">:</span> <span class="ekeyword">Result</span><span class="edot">.</span><a class="efeature" href="../src/simple_date_short.html#f_is_weekday">is_weekday</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Duration</span>
+
+	<a name="f_duration"></a><a class="efeature" href="../src/simple_datetime_short.html#f_duration">duration</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Create a new duration builder.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_days"></a><a class="efeature" href="../src/simple_datetime_short.html#f_days">days</a> <span class="esymbol">(</span><span class="elocal">a_count</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Duration of </span><span class="equoted">a_count</span><span class="ecomment"> days.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_hours"></a><a class="efeature" href="../src/simple_datetime_short.html#f_hours">hours</a> <span class="esymbol">(</span><span class="elocal">a_count</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Duration of </span><span class="equoted">a_count</span><span class="ecomment"> hours.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_minutes"></a><a class="efeature" href="../src/simple_datetime_short.html#f_minutes">minutes</a> <span class="esymbol">(</span><span class="elocal">a_count</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Duration of </span><span class="equoted">a_count</span><span class="ecomment"> minutes.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Human-Friendly Output (Innovative!)</span>
+
+	<a name="f_time_ago"></a><a class="efeature" href="../src/simple_datetime_short.html#f_time_ago">time_ago</a> <span class="esymbol">(</span><span class="elocal">a_datetime</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_time_short.html">SIMPLE_DATE_TIME</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Human-readable relative time in past.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Examples: &quot;just now&quot;, &quot;5 minutes ago&quot;, &quot;2 hours ago&quot;, &quot;yesterday&quot;, &quot;3 days ago&quot;</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">datetime_not_void</span><span class="esymbol">:</span> <span class="elocal">a_datetime</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_time_until"></a><a class="efeature" href="../src/simple_datetime_short.html#f_time_until">time_until</a> <span class="esymbol">(</span><span class="elocal">a_datetime</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_time_short.html">SIMPLE_DATE_TIME</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Human-readable relative time in future.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Examples: &quot;in 5 minutes&quot;, &quot;in 2 hours&quot;, &quot;tomorrow&quot;, &quot;in 3 days&quot;</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">datetime_not_void</span><span class="esymbol">:</span> <span class="elocal">a_datetime</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Date Range</span>
+
+	<a name="f_date_range"></a><a class="efeature" href="../src/simple_datetime_short.html#f_date_range">date_range</a> <span class="esymbol">(</span><span class="elocal">a_start</span><span class="esymbol">,</span> <span class="elocal">a_end</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_range_short.html">SIMPLE_DATE_RANGE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Create a date range between two dates.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">start_not_void</span><span class="esymbol">:</span> <span class="elocal">a_start</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">end_not_void</span><span class="esymbol">:</span> <span class="elocal">a_end</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../src/simple_datetime_short.html">SIMPLE_DATETIME</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="simple_datetime_chart.html">Chart</a>
+<a class="nav class" href="simple_datetime_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="simple_datetime"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

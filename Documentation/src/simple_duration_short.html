@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="TTSimple Duration - Represents a length of time.  TTProvides a fluent API for duration creation and manipulation. TTCan represent durations in various units: days, hours, minutes, seconds.  TTDesign influences: TT- Eiffel Loop: EL_TIME_DURATION concepts TT- Java Duration/Period: Separate time-based vs date-based durations TT- ISO 8601: Duration format (PnDTnHnMnS)  TTExample: TTTd := create {SIMPLE_DURATION}.make_hours (2) TTTd2 := d.plus_minutes (30)  -- 2 hours 30 minutes TTTtotal := d2.total_seconds  -- 9000"/>
+<meta name="author" content="Larry Rix"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>simple_duration Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="simple_duration_chart.html">Chart</a>
+<a class="nav class" href="simple_duration_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="simple_duration"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">		Simple Duration - Represents a length of time.</span>
+		
+		<span class="estring">		Provides a fluent API for duration creation and manipulation.</span>
+		<span class="estring">		Can represent durations in various units: days, hours, minutes, seconds.</span>
+		
+		<span class="estring">		Design influences:</span>
+		<span class="estring">		- Eiffel Loop: EL_TIME_DURATION concepts</span>
+		<span class="estring">		- Java Duration/Period: Separate time-based vs date-based durations</span>
+		<span class="estring">		- ISO 8601: Duration format (PnDTnHnMnS)</span>
+		
+		<span class="estring">		Example:</span>
+		<span class="estring">			d := create </span><span class="esymbol">{</span><a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a><span class="esymbol">}</span><span class="edot">.</span><a class="efeature" href="../src/simple_duration_short.html#f_make_hours">make_hours</a><span class="estring"> (2)</span>
+		<span class="estring">			d2 := d.plus_minutes (30) &nbsp;-- 2 hours 30 minutes</span>
+		<span class="estring">			total := d2.total_seconds &nbsp;-- 9000</span>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+	<span class="eitag">author</span><span class="esymbol">:</span> <span class="estring">&quot;Larry Rix&quot;</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a>
+
+<span class="ekeyword">create</span> 
+	<a class="efeature" href="../src/simple_duration_short.html#f_make_zero">make_zero</a><span class="esymbol">,</span>
+	<a class="efeature" href="../src/simple_duration_short.html#f_make">make</a><span class="esymbol">,</span>
+	<a class="efeature" href="../src/simple_duration_short.html#f_make_days">make_days</a><span class="esymbol">,</span>
+	<a class="efeature" href="../src/simple_duration_short.html#f_make_hours">make_hours</a><span class="esymbol">,</span>
+	<a class="efeature" href="../src/simple_duration_short.html#f_make_minutes">make_minutes</a><span class="esymbol">,</span>
+	<a class="efeature" href="../src/simple_duration_short.html#f_make_seconds">make_seconds</a><span class="esymbol">,</span>
+	<a class="efeature" href="../src/simple_duration_short.html#f_make_from_string">make_from_string</a>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access: Total</span>
+
+	<a name="f_total_seconds"></a><a class="efeature" href="../src/simple_duration_short.html#f_total_seconds">total_seconds</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_64_short.html">INTEGER_64</a>
+			<span class="ecomment">--</span><span class="ecomment"> Total duration in seconds.</span>
+
+	<a name="f_total_minutes"></a><a class="efeature" href="../src/simple_duration_short.html#f_total_minutes">total_minutes</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_64_short.html">INTEGER_64</a>
+			<span class="ecomment">--</span><span class="ecomment"> Total duration in minutes (truncated).</span>
+
+	<a name="f_total_hours"></a><a class="efeature" href="../src/simple_duration_short.html#f_total_hours">total_hours</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_64_short.html">INTEGER_64</a>
+			<span class="ecomment">--</span><span class="ecomment"> Total duration in hours (truncated).</span>
+
+	<a name="f_total_days"></a><a class="efeature" href="../src/simple_duration_short.html#f_total_days">total_days</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_64_short.html">INTEGER_64</a>
+			<span class="ecomment">--</span><span class="ecomment"> Total duration in days (truncated).</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access: Components</span>
+
+	<a name="f_days"></a><a class="efeature" href="../src/simple_duration_short.html#f_days">days</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Days component.</span>
+
+	<a name="f_hours"></a><a class="efeature" href="../src/simple_duration_short.html#f_hours">hours</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Hours component (0-23).</span>
+
+	<a name="f_minutes"></a><a class="efeature" href="../src/simple_duration_short.html#f_minutes">minutes</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Minutes component (0-59).</span>
+
+	<a name="f_seconds"></a><a class="efeature" href="../src/simple_duration_short.html#f_seconds">seconds</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Seconds component (0-59).</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status</span>
+
+	<a name="f_is_zero"></a><a class="efeature" href="../src/simple_duration_short.html#f_is_zero">is_zero</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is this a zero duration?</span>
+
+	<a name="f_is_negative"></a><a class="efeature" href="../src/simple_duration_short.html#f_is_negative">is_negative</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is this a negative duration?</span>
+
+	<a name="f_is_positive"></a><a class="efeature" href="../src/simple_duration_short.html#f_is_positive">is_positive</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is this a positive duration?</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Comparison</span>
+
+	<a name="f_is_less"></a><a class="efeature" href="../src/simple_duration_short.html#f_is_less">is_less</a> <span class="ekeyword">alias</span> <span class="esymbol">&quot;</span><a class="esymbol" href="../src/simple_duration_short.html#f_is_less">&lt;</a><span class="esymbol">&quot;</span> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is this duration less than </span><span class="equoted">other</span><span class="ecomment">?</span>
+
+	<a name="f_is_equal"></a><a class="efeature" href="../src/simple_duration_short.html#f_is_equal">is_equal</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is this duration equal to </span><span class="equoted">other</span><span class="ecomment">?</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Arithmetic</span>
+
+	<a name="f_plus"></a><a class="efeature" href="../src/simple_duration_short.html#f_plus">plus</a> <span class="ekeyword">alias</span> <span class="esymbol">&quot;</span><a class="esymbol" href="../src/simple_duration_short.html#f_plus">+</a><span class="esymbol">&quot;</span> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Sum of this duration and </span><span class="equoted">other</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">other_not_void</span><span class="esymbol">:</span> <span class="elocal">other</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_minus"></a><a class="efeature" href="../src/simple_duration_short.html#f_minus">minus</a> <span class="ekeyword">alias</span> <span class="esymbol">&quot;</span><a class="esymbol" href="../src/simple_duration_short.html#f_minus">-</a><span class="esymbol">&quot;</span> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Difference between this duration and </span><span class="equoted">other</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">other_not_void</span><span class="esymbol">:</span> <span class="elocal">other</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_negated"></a><a class="efeature" href="../src/simple_duration_short.html#f_negated">negated</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Negated duration.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_multiplied"></a><a class="efeature" href="../src/simple_duration_short.html#f_multiplied">multiplied</a> <span class="ekeyword">alias</span> <span class="esymbol">&quot;</span><a class="esymbol" href="../src/simple_duration_short.html#f_multiplied">*</a><span class="esymbol">&quot;</span> <span class="esymbol">(</span><span class="elocal">a_factor</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Duration multiplied by </span><span class="equoted">a_factor</span><span class="ecomment">.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_absolute"></a><a class="efeature" href="../src/simple_duration_short.html#f_absolute">absolute</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Absolute value of duration.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">is_positive_or_zero</span><span class="esymbol">:</span> <span class="ekeyword">Result</span><span class="edot">.</span><a class="efeature" href="../src/simple_duration_short.html#f_total_seconds">total_seconds</a> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Fluent Builder</span>
+
+	<a name="f_plus_days"></a><a class="efeature" href="../src/simple_duration_short.html#f_plus_days">plus_days</a> <span class="esymbol">(</span><span class="elocal">a_days</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> New duration with </span><span class="equoted">a_days</span><span class="ecomment"> added.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_plus_hours"></a><a class="efeature" href="../src/simple_duration_short.html#f_plus_hours">plus_hours</a> <span class="esymbol">(</span><span class="elocal">a_hours</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> New duration with </span><span class="equoted">a_hours</span><span class="ecomment"> added.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_plus_minutes"></a><a class="efeature" href="../src/simple_duration_short.html#f_plus_minutes">plus_minutes</a> <span class="esymbol">(</span><span class="elocal">a_minutes</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> New duration with </span><span class="equoted">a_minutes</span><span class="ecomment"> added.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_plus_seconds"></a><a class="efeature" href="../src/simple_duration_short.html#f_plus_seconds">plus_seconds</a> <span class="esymbol">(</span><span class="elocal">a_seconds</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> New duration with </span><span class="equoted">a_seconds</span><span class="ecomment"> added.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Output</span>
+
+	<a name="f_to_iso8601"></a><a class="efeature" href="../src/simple_duration_short.html#f_to_iso8601">to_iso8601</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> ISO 8601 duration format: &quot;PnDTnHnMnS&quot;</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_to_human"></a><a class="efeature" href="../src/simple_duration_short.html#f_to_human">to_human</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Human-readable format: &quot;2 days, 3 hours, 30 minutes&quot;</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_to_short"></a><a class="efeature" href="../src/simple_duration_short.html#f_to_short">to_short</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Short format: &quot;2d 3h 30m 15s&quot; or &quot;3:30:15&quot;</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_out"></a><a class="efeature" href="../src/simple_duration_short.html#f_out">out</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Default string representation.</span>
+	
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../src/simple_duration_short.html">SIMPLE_DURATION</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="simple_duration_chart.html">Chart</a>
+<a class="nav class" href="simple_duration_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="simple_duration"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

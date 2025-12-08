@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="TTCursor for iterating over SIMPLE_DATE_RANGE.  TTAllows using `across` syntax: TTTacross range as d loop TTTTprint (d.item.to_iso8601) TTTend"/>
+<meta name="author" content="Larry Rix"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>simple_date_range_cursor Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="simple_date_range_cursor_chart.html">Chart</a>
+<a class="nav class" href="simple_date_range_cursor_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="simple_date_range_cursor"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">		Cursor for iterating over SIMPLE_DATE_RANGE.</span>
+		
+		<span class="estring">		Allows using </span><span class="estring">across</span><span class="estring"> syntax:</span>
+		<span class="estring">			across range as d loop</span>
+		<span class="estring">				print (d.item.to_iso8601)</span>
+		<span class="estring">			end</span>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+	<span class="eitag">author</span><span class="esymbol">:</span> <span class="estring">&quot;Larry Rix&quot;</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../src/simple_date_range_cursor_short.html">SIMPLE_DATE_RANGE_CURSOR</a>
+
+<span class="ekeyword">create</span> 
+	<a class="efeature" href="../src/simple_date_range_cursor_short.html#f_make">make</a>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access</span>
+
+	<a name="f_item"></a><a class="efeature" href="../src/simple_date_range_cursor_short.html#f_item">item</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_short.html">SIMPLE_DATE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Current date in iteration.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status</span>
+
+	<a name="f_after"></a><a class="efeature" href="../src/simple_date_range_cursor_short.html#f_after">after</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Has iteration finished?</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Cursor movement</span>
+
+	<a name="f_forth"></a><a class="efeature" href="../src/simple_date_range_cursor_short.html#f_forth">forth</a>
+			<span class="ecomment">--</span><span class="ecomment"> Move to next date.</span>
+	
+<span class="ekeyword">invariant</span>
+	<span class="etag">start_date_attached</span><span class="esymbol">:</span> <a class="efeature" href="../src/simple_date_range_cursor_short.html#f_start_date">start_date</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	<span class="etag">end_date_attached</span><span class="esymbol">:</span> <a class="efeature" href="../src/simple_date_range_cursor_short.html#f_end_date">end_date</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	<span class="etag">current_date_attached</span><span class="esymbol">:</span> <a class="efeature" href="../src/simple_date_range_cursor_short.html#f_current_date">current_date</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../src/simple_date_range_cursor_short.html">SIMPLE_DATE_RANGE_CURSOR</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="simple_date_range_cursor_chart.html">Chart</a>
+<a class="nav class" href="simple_date_range_cursor_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="simple_date_range_cursor"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

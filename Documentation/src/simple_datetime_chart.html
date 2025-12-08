@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="TTSimple DateTime - High-level facade for date/time operations.  TTProvides factory methods, parsing, and convenience features. TTWraps EiffelStudio's TIME library with a cleaner, fluent API.  TTFeatures: TT- Factory methods: now, today, date, time, datetime TT- Smart parsing: automatically detects common formats TT- Relative dates: next_monday, last_friday, etc. TT- Human-friendly output: time_ago, time_until TT- Business day support TT- Age calculation  TTExample: TTTcreate dt.make TTTtoday := dt.today TTTnext_week := dt.today.plus_days (7) TTTage := dt.age_from (birthdate)"/>
+<meta name="author" content="Larry Rix"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>simple_datetime Chart</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<span class="nav class selected">Chart</span>
+<a class="nav class" href="simple_datetime_links.html">Relations</a>
+<a class="nav class" href="simple_datetime_short.html">Contracts</a>
+<span class="nav class goto">Go to: <input name="c" value="simple_datetime"></span>
+</div></form><pre><span class="ekeyword">class</span>
+	<a class="eclass" href="../src/simple_datetime_chart.html">SIMPLE_DATETIME</a>
+
+<span class="ekeyword">General</span>
+	<span class="eitag">cluster</span><span class="esymbol">:</span> <a class="ecluster" href="../src/index.html">src</a>
+	<span class="eitag">description</span><span class="esymbol">:</span> 
+		<span class="estring">&quot;Simple DateTime - High-level facade for date/time operations.</span>
+		
+		<span class="estring">Provides factory methods, parsing, and convenience features.</span>
+		<span class="estring">Wraps EiffelStudio's TIME library with a cleaner, fluent API.</span>
+		
+		<span class="estring">Features:</span>
+		<span class="estring">- Factory methods: now, today, date, time, datetime</span>
+		<span class="estring">- Smart parsing: automatically detects common formats</span>
+		<span class="estring">- Relative dates: next_monday, last_friday, etc.</span>
+		<span class="estring">- Human-friendly output: time_ago, time_until</span>
+		<span class="estring">- Business day support</span>
+		<span class="estring">- Age calculation</span>
+		
+		<span class="estring">Example:</span>
+		<span class="estring">create dt.make</span>
+		<span class="estring">today := dt.today</span>
+		<span class="estring">next_week := dt.today.plus_days (7)</span>
+		<span class="estring">age := dt.age_from (birthdate)&quot;</span>
+	<span class="eitag">create</span><span class="esymbol">:</span> <a class="efeature" href="../src/simple_datetime_short.html#f_make">make</a>
+
+<span class="ekeyword">Ancestors</span>
+	<a class="eclass" href="../base/any_chart.html">ANY</a>
+
+<span class="ekeyword">Queries</span>
+	<span title="`add_business_days' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_add_business_days">add_business_days</a> <span class="esymbol">(</span><span class="elocal">a_date</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a><span class="esymbol">;</span> <span class="elocal">a_days</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a></span>
+	<span title="`age_between' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_age_between">age_between</a> <span class="esymbol">(</span><span class="elocal">a_start</span><span class="esymbol">,</span> <span class="elocal">a_end</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_age_chart.html">SIMPLE_AGE</a></span>
+	<span title="`age_from' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_age_from">age_from</a> <span class="esymbol">(</span><span class="elocal">a_birthdate</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_age_chart.html">SIMPLE_AGE</a></span>
+	<span title="`business_days_between' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_business_days_between">business_days_between</a> <span class="esymbol">(</span><span class="elocal">a_start</span><span class="esymbol">,</span> <span class="elocal">a_end</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a></span>
+	<span title="`date' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_date">date</a> <span class="esymbol">(</span><span class="elocal">a_year</span><span class="esymbol">,</span> <span class="elocal">a_month</span><span class="esymbol">,</span> <span class="elocal">a_day</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a></span>
+	<span title="`date_range' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_date_range">date_range</a> <span class="esymbol">(</span><span class="elocal">a_start</span><span class="esymbol">,</span> <span class="elocal">a_end</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_range_chart.html">SIMPLE_DATE_RANGE</a></span>
+	<span title="`datetime' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_datetime">datetime</a> <span class="esymbol">(</span><span class="elocal">a_year</span><span class="esymbol">,</span> <span class="elocal">a_month</span><span class="esymbol">,</span> <span class="elocal">a_day</span><span class="esymbol">,</span> <span class="elocal">a_hour</span><span class="esymbol">,</span> <span class="elocal">a_minute</span><span class="esymbol">,</span> <span class="elocal">a_second</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_time_chart.html">SIMPLE_DATE_TIME</a></span>
+	<span title="`days' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_days">days</a> <span class="esymbol">(</span><span class="elocal">a_count</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_chart.html">SIMPLE_DURATION</a></span>
+	<span title="`duration' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_duration">duration</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_chart.html">SIMPLE_DURATION</a></span>
+	<span title="`first_of_month' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_first_of_month">first_of_month</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a></span>
+	<span title="`first_of_next_month' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_first_of_next_month">first_of_next_month</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a></span>
+	<span title="`first_of_year' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_first_of_year">first_of_year</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a></span>
+	<span title="`from_timestamp' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_from_timestamp">from_timestamp</a> <span class="esymbol">(</span><span class="elocal">a_unix_timestamp</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_64_chart.html">INTEGER_64</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_time_chart.html">SIMPLE_DATE_TIME</a></span>
+	<span title="`hours' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_hours">hours</a> <span class="esymbol">(</span><span class="elocal">a_count</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_chart.html">SIMPLE_DURATION</a></span>
+	<span title="`is_business_day' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_is_business_day">is_business_day</a> <span class="esymbol">(</span><span class="elocal">a_date</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`last_friday' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_last_friday">last_friday</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a></span>
+	<span title="`last_monday' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_last_monday">last_monday</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a></span>
+	<span title="`last_of_month' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_last_of_month">last_of_month</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a></span>
+	<span title="`last_of_year' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_last_of_year">last_of_year</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a></span>
+	<span title="`minutes' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_minutes">minutes</a> <span class="esymbol">(</span><span class="elocal">a_count</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_duration_chart.html">SIMPLE_DURATION</a></span>
+	<span title="`next_business_day' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_next_business_day">next_business_day</a> <span class="esymbol">(</span><span class="elocal">a_date</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a></span>
+	<span title="`next_friday' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_next_friday">next_friday</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a></span>
+	<span title="`next_monday' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_next_monday">next_monday</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a></span>
+	<span title="`next_thursday' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_next_thursday">next_thursday</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a></span>
+	<span title="`next_tuesday' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_next_tuesday">next_tuesday</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a></span>
+	<span title="`next_wednesday' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_next_wednesday">next_wednesday</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a></span>
+	<span title="`now' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_now">now</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_time_chart.html">SIMPLE_DATE_TIME</a></span>
+	<span title="`parse_date' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_parse_date">parse_date</a> <span class="esymbol">(</span><span class="elocal">a_string</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_chart.html">STRING_8</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a></span>
+	<span title="`parse_datetime' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_parse_datetime">parse_datetime</a> <span class="esymbol">(</span><span class="elocal">a_string</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_chart.html">STRING_8</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_time_chart.html">SIMPLE_DATE_TIME</a></span>
+	<span title="`parse_iso8601' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_parse_iso8601">parse_iso8601</a> <span class="esymbol">(</span><span class="elocal">a_string</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_chart.html">STRING_8</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_time_chart.html">SIMPLE_DATE_TIME</a></span>
+	<span title="`time' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_time">time</a> <span class="esymbol">(</span><span class="elocal">a_hour</span><span class="esymbol">,</span> <span class="elocal">a_minute</span><span class="esymbol">,</span> <span class="elocal">a_second</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_time_chart.html">SIMPLE_TIME</a></span>
+	<span title="`time_ago' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_time_ago">time_ago</a> <span class="esymbol">(</span><span class="elocal">a_datetime</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_time_chart.html">SIMPLE_DATE_TIME</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_chart.html">STRING_8</a></span>
+	<span title="`time_until' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_time_until">time_until</a> <span class="esymbol">(</span><span class="elocal">a_datetime</span><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_time_chart.html">SIMPLE_DATE_TIME</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_chart.html">STRING_8</a></span>
+	<span title="`today' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_today">today</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a></span>
+	<span title="`tomorrow' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_tomorrow">tomorrow</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a></span>
+	<span title="`utc_now' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_utc_now">utc_now</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_time_chart.html">SIMPLE_DATE_TIME</a></span>
+	<span title="`yesterday' is declared in `Current'"><a class="efeature" href="../src/simple_datetime_short.html#f_yesterday">yesterday</a><span class="esymbol">:</span> <a class="eclass" href="../src/simple_date_chart.html">SIMPLE_DATE</a></span>
+
+</pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<span class="nav class selected">Chart</span>
+<a class="nav class" href="simple_datetime_links.html">Relations</a>
+<a class="nav class" href="simple_datetime_short.html">Contracts</a>
+<span class="nav class goto">Go to: <input name="c" value="simple_datetime"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
