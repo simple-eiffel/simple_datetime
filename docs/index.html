@@ -3,231 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>simple_datetime - Eiffel DateTime Library</title>
+    <title>simple_datetime - DateTime Library for Eiffel</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/logo.png">
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>simple_datetime</h1>
-            <p class="tagline">A comprehensive Eiffel library for date, time, duration, and age calculations</p>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="simple_* logo" class="logo">
+        </div>
+        <h1>simple_datetime</h1>
+        <p class="tagline">Date, Time, Duration, and Age Calculations for Eiffel</p>
+        <div class="badges">
+            <span class="badge badge-version">v1.0.0</span>
+            <span class="badge badge-license">MIT</span>
         </div>
     </header>
 
     <nav>
-        <div class="container">
-            <ul>
-                <li><a href="#overview">Overview</a></li>
-                <li><a href="#classes">Classes</a></li>
-                <li><a href="#installation">Installation</a></li>
-                <li><a href="#examples">Examples</a></li>
-                <li><a href="#api-integration">API Integration</a></li>
-            </ul>
-        </div>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#usage">Usage</a></li>
+            <li><a href="#api">API Reference</a></li>
+            <li><a href="https://github.com/simple-eiffel/simple_datetime">GitHub</a></li>
+        </ul>
     </nav>
 
-    <main class="container">
+    <main>
         <section id="overview">
             <h2>Overview</h2>
-            <p>simple_datetime provides a clean, fluent API for working with dates, times, durations, ages, and date ranges in Eiffel. It wraps the standard DATE and TIME classes while providing modern conveniences and integration with the FOUNDATION_API architecture.</p>
-
-            <h3>Key Features</h3>
-            <ul>
-                <li><strong>Fluent API</strong> - Chain operations naturally: <code>date.plus_days(7).plus_months(1)</code></li>
-                <li><strong>Multiple Formats</strong> - ISO 8601, American, European, human-readable</li>
-                <li><strong>Duration Calculations</strong> - Work with time spans in days, hours, minutes, seconds</li>
-                <li><strong>Age Calculations</strong> - Calculate ages with lifecycle stage detection</li>
-                <li><strong>Date Ranges</strong> - Create and manipulate periods with overlap detection</li>
-                <li><strong>API Integration</strong> - Ready for SERVICE_API and APP_API architectures</li>
-            </ul>
+            <p>
+                <strong>simple_datetime</strong> provides a fluent API for working with dates, times,
+                durations, ages, and date ranges in Eiffel. Chain operations naturally with Design by Contract validation.
+            </p>
         </section>
 
-        <section id="classes">
-            <h2>Classes</h2>
-
-            <div class="class-card">
-                <h3>SIMPLE_DATE</h3>
-                <p>Date manipulation with formatting, arithmetic, and comparison.</p>
-                <ul>
-                    <li>Create from year/month/day or ISO 8601 string</li>
-                    <li>Add/subtract days, months, years</li>
-                    <li>Format as ISO 8601, American (MM/DD/YYYY), European (DD.MM.YYYY)</li>
-                    <li>Day of week, weekend/weekday detection</li>
-                    <li>Start/end of month, quarter, year</li>
-                </ul>
-            </div>
-
-            <div class="class-card">
-                <h3>SIMPLE_TIME</h3>
-                <p>Time manipulation with 12/24 hour support.</p>
-                <ul>
-                    <li>Create from hour/minute/second</li>
-                    <li>12-hour and 24-hour formatting</li>
-                    <li>AM/PM detection</li>
-                    <li>Time period detection (morning, afternoon, evening, night)</li>
-                    <li>Add/subtract hours, minutes, seconds</li>
-                </ul>
-            </div>
-
-            <div class="class-card">
-                <h3>SIMPLE_DATE_TIME</h3>
-                <p>Combined date and time with full functionality.</p>
-                <ul>
-                    <li>Access date and time components</li>
-                    <li>ISO 8601 datetime formatting</li>
-                    <li>Comparison and arithmetic operations</li>
-                </ul>
-            </div>
-
-            <div class="class-card">
-                <h3>SIMPLE_DURATION</h3>
-                <p>Time span representation and arithmetic.</p>
-                <ul>
-                    <li>Create from days/hours/minutes/seconds</li>
-                    <li>Create from ISO 8601 duration string (PnDTnHnMnS)</li>
-                    <li>Addition, subtraction, multiplication</li>
-                    <li>Human-readable output ("2 hours, 30 minutes")</li>
-                </ul>
-            </div>
-
-            <div class="class-card">
-                <h3>SIMPLE_AGE</h3>
-                <p>Age representation with lifecycle detection.</p>
-                <ul>
-                    <li>Calculate from birthdate to reference date</li>
-                    <li>Years, months, days components</li>
-                    <li>Lifecycle stages: child, teen, adult, senior</li>
-                    <li>Threshold checking (is_at_least, is_under, is_between)</li>
-                </ul>
-            </div>
-
-            <div class="class-card">
-                <h3>SIMPLE_DATE_RANGE</h3>
-                <p>Date period handling with set operations.</p>
-                <ul>
-                    <li>Create from start/end dates or week/month/year</li>
-                    <li>Contains and overlaps detection</li>
-                    <li>Union and intersection operations</li>
-                    <li>Business days calculation</li>
-                </ul>
+        <section id="features">
+            <h2>Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>SIMPLE_DATE</h4>
+                    <p>Date arithmetic, formatting (ISO/American/European), weekday detection</p>
+                </div>
+                <div class="feature-card">
+                    <h4>SIMPLE_TIME</h4>
+                    <p>12/24 hour format, AM/PM, time period detection (morning/afternoon)</p>
+                </div>
+                <div class="feature-card">
+                    <h4>SIMPLE_DATE_TIME</h4>
+                    <p>Combined date+time with ISO 8601 support</p>
+                </div>
+                <div class="feature-card">
+                    <h4>SIMPLE_DURATION</h4>
+                    <p>Time spans, ISO 8601 durations, human-readable output</p>
+                </div>
+                <div class="feature-card">
+                    <h4>SIMPLE_AGE</h4>
+                    <p>Age calculation, lifecycle stages (child/teen/adult/senior)</p>
+                </div>
+                <div class="feature-card">
+                    <h4>SIMPLE_DATE_RANGE</h4>
+                    <p>Periods, overlap detection, business days calculation</p>
+                </div>
             </div>
         </section>
 
         <section id="installation">
             <h2>Installation</h2>
-            <h3>Environment Variable</h3>
-            <p>Set the SIMPLE_DATETIME environment variable:</p>
-            <pre><code>SIMPLE_DATETIME=D:\prod\simple_datetime</code></pre>
-
-            <h3>ECF Configuration</h3>
-            <p>Add to your project's ECF file:</p>
-            <pre><code>&lt;library name="simple_datetime" location="$SIMPLE_DATETIME/simple_datetime.ecf"/&gt;</code></pre>
+            <pre><code>&lt;library name="simple_datetime"
+        location="$SIMPLE_DATETIME\simple_datetime.ecf"/&gt;</code></pre>
         </section>
 
-        <section id="examples">
-            <h2>Examples</h2>
+        <section id="usage">
+            <h2>Quick Start</h2>
+            <div class="quick-start">
+                <pre><code><span class="keyword">local</span>
+    d: <span class="type">SIMPLE_DATE</span>
+    age: <span class="type">SIMPLE_AGE</span>
+    dur: <span class="type">SIMPLE_DURATION</span>
+<span class="keyword">do</span>
+    <span class="comment">-- Date operations</span>
+    <span class="keyword">create</span> d.<span class="feature">make</span> (2025, 12, 7)
+    <span class="keyword">print</span> (d.<span class="feature">to_iso8601</span>)      <span class="comment">-- "2025-12-07"</span>
+    <span class="keyword">print</span> (d.<span class="feature">plus_days</span> (7).<span class="feature">to_american</span>)  <span class="comment">-- "12/14/2025"</span>
 
-            <h3>Date Operations</h3>
-            <pre><code>local
-    d: SIMPLE_DATE
-    next_week: SIMPLE_DATE
-do
-    create d.make (2025, 12, 7)
+    <span class="comment">-- Age calculation</span>
+    <span class="keyword">create</span> age.<span class="feature">make_from_dates</span> (birth, today)
+    <span class="keyword">print</span> (age.<span class="feature">to_string</span>)     <span class="comment">-- "25 years, 5 months"</span>
+    <span class="keyword">print</span> (age.<span class="feature">is_adult</span>)      <span class="comment">-- True</span>
 
-    -- Format output
-    print (d.to_iso8601)      -- "2025-12-07"
-    print (d.to_american)     -- "12/07/2025"
-    print (d.to_european)     -- "07.12.2025"
-
-    -- Arithmetic
-    next_week := d.plus_days (7)
-
-    -- Day of week
-    if d.is_weekend then
-        print ("It's the weekend!")
-    end
-end</code></pre>
-
-            <h3>Duration Calculations</h3>
-            <pre><code>local
-    dur: SIMPLE_DURATION
-do
-    create dur.make (2, 3, 30, 45)  -- 2 days, 3 hours, 30 minutes, 45 seconds
-
-    print (dur.to_iso8601)   -- "P2DT3H30M45S"
-    print (dur.to_human)     -- "2 days, 3 hours, 30 minutes, 45 seconds"
-    print (dur.total_seconds) -- 185445
-end</code></pre>
-
-            <h3>Age Calculations</h3>
-            <pre><code>local
-    birth: SIMPLE_DATE
-    today: SIMPLE_DATE
-    age: SIMPLE_AGE
-do
-    create birth.make (2000, 1, 1)
-    create today.make (2025, 6, 15)
-    create age.make_from_dates (birth, today)
-
-    print (age.to_string)     -- "25 years, 5 months, 14 days"
-    print (age.is_adult)      -- True
-    print (age.is_at_least (21)) -- True
-end</code></pre>
-
-            <h3>Date Ranges</h3>
-            <pre><code>local
-    range: SIMPLE_DATE_RANGE
-    test_date: SIMPLE_DATE
-do
-    create range.make_month (2025, 1)  -- January 2025
-    create test_date.make (2025, 1, 15)
-
-    print (range.total_days)           -- 31
-    print (range.contains (test_date)) -- True
-    print (range.to_string)            -- "2025-01-01 to 2025-01-31"
-end</code></pre>
+    <span class="comment">-- Duration</span>
+    <span class="keyword">create</span> dur.<span class="feature">make</span> (2, 3, 30, 0)  <span class="comment">-- 2d, 3h, 30m</span>
+    <span class="keyword">print</span> (dur.<span class="feature">to_human</span>)      <span class="comment">-- "2 days, 3 hours, 30 minutes"</span>
+<span class="keyword">end</span></code></pre>
+            </div>
         </section>
 
-        <section id="api-integration">
-            <h2>API Integration</h2>
-            <p>simple_datetime integrates with the FOUNDATION_API architecture. Access datetime functionality through your API layer:</p>
+        <section id="api">
+            <h2>API Reference</h2>
 
-            <h3>Using via SERVICE_API or APP_API</h3>
-            <pre><code>class MY_SERVICE
-inherit
-    SERVICE_API
+            <div class="api-section">
+                <h3>SIMPLE_DATE</h3>
+                <div class="signature">make (year, month, day: INTEGER)</div>
+                <div class="signature">make_from_iso8601 (s: STRING)</div>
+                <div class="signature">plus_days (n): SIMPLE_DATE</div>
+                <div class="signature">plus_months (n): SIMPLE_DATE</div>
+                <div class="signature">to_iso8601, to_american, to_european: STRING</div>
+                <div class="signature">is_weekend, is_weekday: BOOLEAN</div>
+            </div>
 
-feature -- Datetime Operations
+            <div class="api-section">
+                <h3>SIMPLE_TIME</h3>
+                <div class="signature">make (hour, minute, second: INTEGER)</div>
+                <div class="signature">to_24hour, to_12hour: STRING</div>
+                <div class="signature">is_morning, is_afternoon, is_evening: BOOLEAN</div>
+            </div>
 
-    calculate_due_date (start_date: SIMPLE_DATE; days: INTEGER): SIMPLE_DATE
-        do
-            Result := api.datetime.date_plus_days (start_date, days)
-        end
+            <div class="api-section">
+                <h3>SIMPLE_DURATION</h3>
+                <div class="signature">make (days, hours, minutes, seconds: INTEGER)</div>
+                <div class="signature">make_from_iso8601 (s: STRING)</div>
+                <div class="signature">to_iso8601: STRING</div>
+                <div class="signature">to_human: STRING</div>
+                <div class="signature">total_seconds: INTEGER_64</div>
+            </div>
 
-    format_date_for_display (date: SIMPLE_DATE): STRING
-        do
-            Result := api.datetime.to_american (date)
-        end
-end</code></pre>
-        </section>
+            <div class="api-section">
+                <h3>SIMPLE_AGE</h3>
+                <div class="signature">make_from_dates (birth, reference: SIMPLE_DATE)</div>
+                <div class="signature">years, months, days: INTEGER</div>
+                <div class="signature">is_child, is_teen, is_adult, is_senior: BOOLEAN</div>
+                <div class="signature">is_at_least (years): BOOLEAN</div>
+            </div>
 
-        <section id="design">
-            <h2>Design Influences</h2>
-            <p>simple_datetime draws inspiration from:</p>
-            <ul>
-                <li><strong>Eiffel Loop</strong> - EL_DATE, EL_TIME, EL_TIME_DURATION patterns</li>
-                <li><strong>Pylon Library</strong> - Fluent date arithmetic approach</li>
-                <li><strong>ISO 8601</strong> - Standard date/time/duration formats</li>
-                <li><strong>Java 8 java.time</strong> - Modern datetime API concepts</li>
-            </ul>
+            <div class="api-section">
+                <h3>SIMPLE_DATE_RANGE</h3>
+                <div class="signature">make (start_date, end_date: SIMPLE_DATE)</div>
+                <div class="signature">make_month (year, month: INTEGER)</div>
+                <div class="signature">contains (date): BOOLEAN</div>
+                <div class="signature">overlaps (other): BOOLEAN</div>
+                <div class="signature">total_days, business_days: INTEGER</div>
+            </div>
         </section>
     </main>
 
     <footer>
-        <div class="container">
-            <p>simple_datetime - Part of the Simple Libraries collection</p>
-            <p>Author: Larry Rix</p>
-        </div>
+        <p>simple_datetime is part of the <a href="https://github.com/simple-eiffel">simple_*</a> library collection.</p>
+        <p class="copyright">&copy; 2024-2025 Larry Rix. MIT License.</p>
     </footer>
 </body>
 </html>
