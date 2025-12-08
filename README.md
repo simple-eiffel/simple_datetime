@@ -4,7 +4,7 @@
 
 # simple_datetime
 
-**[Documentation](https://ljr1981.github.io/simple_datetime/)** | **[GitHub](https://github.com/ljr1981/simple_datetime)**
+**[Documentation](https://simple-eiffel.github.io/simple_datetime/)** | **[GitHub](https://github.com/simple-eiffel/simple_datetime)**
 
 High-level datetime library for Eiffel providing fluent date/time manipulation, age calculations, and date ranges with business day support.
 
