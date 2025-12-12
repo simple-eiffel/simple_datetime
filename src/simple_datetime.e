@@ -39,7 +39,10 @@ feature {NONE} -- Initialization
 
 feature -- Factory: Current Time
 
-	now: SIMPLE_DATE_TIME
+	now,
+	current_time,
+	current_datetime,
+	timestamp: SIMPLE_DATE_TIME
 			-- Current date and time in local timezone.
 		do
 			create Result.make_now
@@ -47,7 +50,9 @@ feature -- Factory: Current Time
 			result_attached: Result /= Void
 		end
 
-	utc_now: SIMPLE_DATE_TIME
+	utc_now,
+	utc_timestamp,
+	current_utc: SIMPLE_DATE_TIME
 			-- Current date and time in UTC.
 		do
 			create Result.make_now_utc
@@ -55,7 +60,9 @@ feature -- Factory: Current Time
 			result_attached: Result /= Void
 		end
 
-	today: SIMPLE_DATE
+	today,
+	current_date,
+	todays_date: SIMPLE_DATE
 			-- Today's date.
 		do
 			create Result.make_now
@@ -81,7 +88,10 @@ feature -- Factory: Current Time
 
 feature -- Factory: Creation
 
-	date (a_year, a_month, a_day: INTEGER): SIMPLE_DATE
+	date,
+	new_date,
+	make_date,
+	create_date (a_year, a_month, a_day: INTEGER): SIMPLE_DATE
 			-- Create date from components.
 		require
 			valid_month: a_month >= 1 and a_month <= 12
@@ -95,7 +105,10 @@ feature -- Factory: Creation
 			day_set: Result.day = a_day
 		end
 
-	time (a_hour, a_minute, a_second: INTEGER): SIMPLE_TIME
+	time,
+	new_time,
+	make_time,
+	create_time (a_hour, a_minute, a_second: INTEGER): SIMPLE_TIME
 			-- Create time from components.
 		require
 			valid_hour: a_hour >= 0 and a_hour <= 23
@@ -110,7 +123,10 @@ feature -- Factory: Creation
 			second_set: Result.second = a_second
 		end
 
-	datetime (a_year, a_month, a_day, a_hour, a_minute, a_second: INTEGER): SIMPLE_DATE_TIME
+	datetime,
+	new_datetime,
+	make_datetime,
+	create_datetime (a_year, a_month, a_day, a_hour, a_minute, a_second: INTEGER): SIMPLE_DATE_TIME
 			-- Create datetime from components.
 		require
 			valid_month: a_month >= 1 and a_month <= 12
@@ -126,7 +142,10 @@ feature -- Factory: Creation
 
 feature -- Factory: From Timestamp
 
-	from_timestamp (a_unix_timestamp: INTEGER_64): SIMPLE_DATE_TIME
+	from_timestamp,
+	from_unix,
+	from_epoch,
+	unix_to_datetime (a_unix_timestamp: INTEGER_64): SIMPLE_DATE_TIME
 			-- Create datetime from Unix timestamp (seconds since 1970-01-01).
 		do
 			create Result.make_from_timestamp (a_unix_timestamp)
@@ -136,7 +155,10 @@ feature -- Factory: From Timestamp
 
 feature -- Parsing
 
-	parse_date (a_string: STRING): SIMPLE_DATE
+	parse_date,
+	decode_date,
+	date_from_string,
+	string_to_date (a_string: STRING): SIMPLE_DATE
 			-- Parse date from string, trying common formats.
 			-- Supports: YYYY-MM-DD, MM/DD/YYYY, DD.MM.YYYY
 		require
@@ -147,7 +169,10 @@ feature -- Parsing
 			result_attached: Result /= Void
 		end
 
-	parse_datetime (a_string: STRING): SIMPLE_DATE_TIME
+	parse_datetime,
+	decode_datetime,
+	datetime_from_string,
+	string_to_datetime (a_string: STRING): SIMPLE_DATE_TIME
 			-- Parse datetime from string, trying common formats.
 			-- Supports: ISO 8601 and common variants
 		require
@@ -158,7 +183,10 @@ feature -- Parsing
 			result_attached: Result /= Void
 		end
 
-	parse_iso8601 (a_string: STRING): SIMPLE_DATE_TIME
+	parse_iso8601,
+	decode_iso8601,
+	from_iso8601,
+	iso_to_datetime (a_string: STRING): SIMPLE_DATE_TIME
 			-- Parse ISO 8601 formatted datetime.
 			-- Format: YYYY-MM-DDTHH:MM:SS or YYYY-MM-DDTHH:MM:SSZ
 		require

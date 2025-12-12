@@ -280,7 +280,9 @@ feature -- Comparison
 
 feature -- Arithmetic
 
-	plus_days (a_days: INTEGER): SIMPLE_DATE
+	plus_days,
+	add_days,
+	days_from_now (a_days: INTEGER): SIMPLE_DATE
 			-- New date with `a_days' added.
 		local
 			l_date: DATE
@@ -508,7 +510,10 @@ feature -- Navigation
 
 feature -- Output (Multiple formats - influenced by Pylon)
 
-	to_iso8601: STRING
+	to_iso8601,
+	to_iso,
+	as_iso,
+	format_iso: STRING
 			-- ISO 8601 format: "YYYY-MM-DD"
 		do
 			create Result.make (10)
@@ -584,7 +589,10 @@ feature -- Output (Multiple formats - influenced by Pylon)
 			result_attached: Result /= Void
 		end
 
-	to_human: STRING
+	to_human,
+	to_string,
+	as_readable,
+	format_readable: STRING
 			-- Human-readable format: "December 7, 2025"
 		do
 			create Result.make (20)
