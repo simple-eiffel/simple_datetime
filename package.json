@@ -1,0 +1,9 @@
+{
+  "name": "simple_datetime",
+  "version": "0.1.0",
+  "description": "Simple DateTime - High-level date/time API with fluent interface and innovative features",
+  "author": "Larry Rix",
+  "license": "MIT",
+  "category": "utilities",
+  "keywords": ["datetime", "date", "time", "calendar"]
+}
