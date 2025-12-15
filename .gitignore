@@ -1,9 +1,26 @@
-# Eiffel compilation artifacts
+# Eiffel build artifacts
 EIFGENs/
-*.lock
+Documentation/
 
-# Log files
-*.log
+# Compiled files
+*.melted
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
 
-# Resource files (generated)
-*.rc
+# Backup files
+*.swp
+*.bak
+*~
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
