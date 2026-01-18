@@ -383,11 +383,11 @@ feature -- Output
 			end
 
 			create Result.make (50)
-			across l_parts as part loop
+			across l_parts as ic_part loop
 				if Result.count > 0 then
 					Result.append_string (", ")
 				end
-				Result.append (part)
+				Result.append (ic_part)
 			end
 		ensure
 			result_attached: Result /= Void
