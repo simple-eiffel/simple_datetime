@@ -30,6 +30,11 @@ inherit
 			out
 		end
 
+	MML_MODEL
+		undefine
+			out
+		end
+
 create
 	make,
 	make_week,
@@ -40,9 +45,7 @@ feature {NONE} -- Initialization
 
 	make (a_start, a_end: SIMPLE_DATE)
 			-- Create range from `a_start' to `a_end'.
-		require
-			start_not_void: a_start /= Void
-			end_not_void: a_end /= Void
+			-- Automatically normalizes so start_date <= end_date.
 		do
 			if a_start.is_before (a_end) or a_start.is_equal (a_end) then
 				start_date := a_start
@@ -53,20 +56,21 @@ feature {NONE} -- Initialization
 				end_date := a_start
 			end
 		ensure
-			start_date_set: start_date /= Void
-			end_date_set: end_date /= Void
 			ordered: start_date.is_before (end_date) or start_date.is_equal (end_date)
+			covers_start: contains (a_start)
+			covers_end: contains (a_end)
+			model_count: date_interval.count = total_days
 		end
 
 	make_week (a_start: SIMPLE_DATE)
 			-- Create a 7-day range starting from `a_start'.
-		require
-			start_not_void: a_start /= Void
 		do
 			start_date := a_start
 			end_date := a_start.plus_days (6)
 		ensure
 			seven_days: total_days = 7
+			starts_at: start_date.is_equal (a_start)
+			model_count: date_interval.count = 7
 		end
 
 	make_month (a_year, a_month: INTEGER)
@@ -76,6 +80,10 @@ feature {NONE} -- Initialization
 		do
 			create start_date.make (a_year, a_month, 1)
 			end_date := start_date.end_of_month
+		ensure
+			correct_start: start_date.year = a_year and start_date.month = a_month and start_date.day = 1
+			correct_end: end_date.month = a_month and end_date.year = a_year
+			model_count: date_interval.count = total_days
 		end
 
 	make_year (a_year: INTEGER)
@@ -83,6 +91,11 @@ feature {NONE} -- Initialization
 		do
 			create start_date.make (a_year, 1, 1)
 			create end_date.make (a_year, 12, 31)
+		ensure
+			correct_start: start_date.year = a_year and start_date.month = 1 and start_date.day = 1
+			correct_end: end_date.year = a_year and end_date.month = 12 and end_date.day = 31
+			leap_year_days: start_date.is_leap_year implies total_days = 366
+			normal_year_days: not start_date.is_leap_year implies total_days = 365
 		end
 
 feature -- Access
@@ -92,6 +105,39 @@ feature -- Access
 
 	end_date: SIMPLE_DATE
 			-- End of range (inclusive).
+
+feature -- Model Query (MML)
+
+	date_interval: MML_INTERVAL
+			-- Model query: range as MML_INTERVAL of day numbers.
+			-- Uses internal DATE.days for consistent day numbering.
+		do
+			create Result.from_range (start_date.internal_date.days, end_date.internal_date.days)
+		ensure
+			correct_count: Result.count = total_days
+			not_empty: not Result.is_empty
+			lower_matches: Result.lower = start_date.internal_date.days
+			upper_matches: Result.upper = end_date.internal_date.days
+		end
+
+	day_number (a_date: SIMPLE_DATE): INTEGER
+			-- Model helper: convert date to day number for interval operations.
+		do
+			Result := a_date.internal_date.days
+		end
+
+feature -- Comparison (MML_MODEL implementation)
+
+	is_model_equal alias "|=|" (other: MML_MODEL): BOOLEAN
+			-- Does this date range model equal `other'?
+			-- Two date ranges are model-equal iff they cover the same interval.
+		do
+			if attached {SIMPLE_DATE_RANGE} other as other_range then
+				Result := date_interval |=| other_range.date_interval
+			end
+		ensure then
+			same_interval: attached {SIMPLE_DATE_RANGE} other as r implies (Result = (date_interval |=| r.date_interval))
+		end
 
 feature -- Measurement
 
@@ -141,11 +187,11 @@ feature -- Status
 
 	contains (a_date: SIMPLE_DATE): BOOLEAN
 			-- Is `a_date' within this range (inclusive)?
-		require
-			date_not_void: a_date /= Void
 		do
 			Result := (a_date.is_after (start_date) or a_date.is_equal (start_date)) and
 				(a_date.is_before (end_date) or a_date.is_equal (end_date))
+		ensure
+			model_definition: Result = date_interval.has (day_number (a_date))
 		end
 
 	contains_today: BOOLEAN
@@ -159,20 +205,25 @@ feature -- Status
 
 	overlaps (other: SIMPLE_DATE_RANGE): BOOLEAN
 			-- Does this range overlap with `other'?
-		require
-			other_not_void: other /= Void
+			-- Two ranges overlap iff their intersection is non-empty.
 		do
 			Result := contains (other.start_date) or contains (other.end_date) or
 				other.contains (start_date) or other.contains (end_date)
+		ensure
+			model_definition: Result = not (date_interval * other.date_interval).is_empty
+			symmetric: Result = other.overlaps (Current)
 		end
 
 	is_adjacent (other: SIMPLE_DATE_RANGE): BOOLEAN
-			-- Is this range adjacent to `other' (no gap)?
-		require
-			other_not_void: other /= Void
+			-- Is this range adjacent to `other' (no gap, no overlap)?
 		do
 			Result := end_date.plus_days (1).is_equal (other.start_date) or
 				other.end_date.plus_days (1).is_equal (start_date)
+		ensure
+			model_no_overlap: Result implies not overlaps (other)
+			model_no_gap: Result implies (date_interval.upper + 1 = other.date_interval.lower or
+				other.date_interval.upper + 1 = date_interval.lower)
+			symmetric: Result = other.is_adjacent (Current)
 		end
 
 	is_past: BOOLEAN
@@ -209,8 +260,6 @@ feature -- Operations
 
 	intersection (other: SIMPLE_DATE_RANGE): detachable SIMPLE_DATE_RANGE
 			-- Intersection of this range with `other', or Void if no overlap.
-		require
-			other_not_void: other /= Void
 		local
 			l_start, l_end: SIMPLE_DATE
 		do
@@ -231,12 +280,17 @@ feature -- Operations
 
 				create Result.make (l_start, l_end)
 			end
+		ensure
+			void_when_disjoint: not overlaps (other) implies Result = Void
+			attached_when_overlap: overlaps (other) implies Result /= Void
+			result_subset_of_self: attached Result as r implies (r.date_interval <= date_interval)
+			result_subset_of_other: attached Result as r implies (r.date_interval <= other.date_interval)
+			model_definition: attached Result as r implies (r.date_interval |=| (date_interval * other.date_interval))
 		end
 
 	union (other: SIMPLE_DATE_RANGE): SIMPLE_DATE_RANGE
-			-- Union of this range with `other' (smallest range containing both).
-		require
-			other_not_void: other /= Void
+			-- Union of this range with `other' (smallest contiguous range containing both).
+			-- Note: Returns hull (bounding box), not strict set union.
 		local
 			l_start, l_end: SIMPLE_DATE
 		do
@@ -256,17 +310,23 @@ feature -- Operations
 
 			create Result.make (l_start, l_end)
 		ensure
-			result_attached: Result /= Void
 			contains_this: Result.contains (start_date) and Result.contains (end_date)
 			contains_other: Result.contains (other.start_date) and Result.contains (other.end_date)
+			model_superset_of_self: date_interval <= Result.date_interval
+			model_superset_of_other: other.date_interval <= Result.date_interval
+			model_hull: Result.date_interval |=| (date_interval |+| other.date_interval)
+			symmetric: Result.date_interval |=| other.union (Current).date_interval
 		end
 
 	expanded_by (a_days: INTEGER): SIMPLE_DATE_RANGE
 			-- Range expanded by `a_days' on each end.
+		require
+			non_negative: a_days >= 0
 		do
 			create Result.make (start_date.minus_days (a_days), end_date.plus_days (a_days))
 		ensure
-			result_attached: Result /= Void
+			covers_original: date_interval <= Result.date_interval
+			expanded_days: Result.total_days = total_days + (2 * a_days)
 		end
 
 	shifted_by (a_days: INTEGER): SIMPLE_DATE_RANGE
@@ -274,8 +334,10 @@ feature -- Operations
 		do
 			create Result.make (start_date.plus_days (a_days), end_date.plus_days (a_days))
 		ensure
-			result_attached: Result /= Void
 			same_duration: Result.total_days = total_days
+			model_count_preserved: Result.date_interval.count = date_interval.count
+			shifted_lower: Result.date_interval.lower = date_interval.lower + a_days
+			shifted_upper: Result.date_interval.upper = date_interval.upper + a_days
 		end
 
 feature -- Iteration
@@ -301,8 +363,9 @@ feature -- Iteration
 				l_current := l_current.plus_days (1)
 			end
 		ensure
-			result_attached: Result /= Void
 			correct_count: Result.count = total_days
+			model_count: Result.count = date_interval.count
+			all_contained: across Result as ic all contains (ic) end
 		end
 
 	weekdays: ARRAYED_LIST [SIMPLE_DATE]
@@ -322,8 +385,9 @@ feature -- Iteration
 				l_current := l_current.plus_days (1)
 			end
 		ensure
-			result_attached: Result /= Void
 			correct_count: Result.count = business_days
+			all_contained: across Result as ic all contains (ic) end
+			all_weekdays: across Result as ic all ic.is_weekday end
 		end
 
 	weekends: ARRAYED_LIST [SIMPLE_DATE]
@@ -343,8 +407,10 @@ feature -- Iteration
 				l_current := l_current.plus_days (1)
 			end
 		ensure
-			result_attached: Result /= Void
 			correct_count: Result.count = weekend_days
+			all_contained: across Result as ic all contains (ic) end
+			all_weekends: across Result as ic all ic.is_weekend end
+			partition: Result.count + weekdays.count = total_days
 		end
 
 feature -- Output
@@ -378,8 +444,11 @@ feature -- Output
 		end
 
 invariant
-	start_date_attached: start_date /= Void
-	end_date_attached: end_date /= Void
 	ordered: start_date.is_before (end_date) or start_date.is_equal (end_date)
+	positive_duration: total_days >= 1
+	model_interval_valid: not date_interval.is_empty
+	model_bounds: date_interval.lower = start_date.internal_date.days and
+		date_interval.upper = end_date.internal_date.days
+	contains_endpoints: contains (start_date) and contains (end_date)
 
 end

@@ -739,7 +739,7 @@ feature -- Query
 			valid_range: Result >= 28 and Result <= 31
 		end
 
-feature {SIMPLE_DATE, SIMPLE_DATE_TIME, SIMPLE_AGE} -- Implementation
+feature {SIMPLE_DATE, SIMPLE_DATE_TIME, SIMPLE_AGE, SIMPLE_DATE_RANGE, SIMPLE_DATE_RANGE_CURSOR} -- Implementation
 
 	internal_date: DATE
 			-- Wrapped Eiffel DATE object.
