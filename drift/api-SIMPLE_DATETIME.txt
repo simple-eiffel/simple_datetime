@@ -1,0 +1,773 @@
+note
+	description: "[
+				Simple DateTime - High-level facade for date/time operations.
+		
+				Provides factory methods, parsing, and convenience features.
+				Wraps EiffelStudio's TIME library with a cleaner, fluent API.
+		
+				Features:
+				- Factory methods: now, today, date, time, datetime
+				- Smart parsing: automatically detects common formats
+				- Relative dates: next_monday, last_friday, etc.
+				- Human-friendly output: time_ago, time_until
+				- Business day support
+				- Age calculation
+		
+				Example:
+					create dt.make
+					today := dt.today
+					next_week := dt.today.plus_days (7)
+					age := dt.age_from (birthdate)
+	]"
+	author: "Larry Rix"
+	date: "$Date$"
+	revision: "$Revision$"
+
+class interface
+	SIMPLE_DATETIME
+
+create 
+	make
+			-- Initialize datetime processor.
+
+feature -- Access
+
+	generating_type: TYPE [detachable SIMPLE_DATETIME]
+			-- Type of current object
+			-- (type of which it is a direct instance)
+			-- (from ANY)
+		ensure -- from ANY
+			generating_type_not_void: Result /= Void
+
+	generator: STRING_8
+			-- Name of current object's generating class
+			-- (base class of the type of which it is a direct instance)
+			-- (from ANY)
+		ensure -- from ANY
+			generator_not_void: Result /= Void
+			generator_not_empty: not Result.is_empty
+	
+feature -- Comparison
+
+	frozen deep_equal (a: detachable ANY; b: like arg #1): BOOLEAN
+			-- Are `a` and `b` either both void
+			-- or attached to isomorphic object structures?
+			-- (from ANY)
+		ensure -- from ANY
+			instance_free: class
+			shallow_implies_deep: standard_equal (a, b) implies Result
+			both_or_none_void: (a = Void) implies (Result = (b = Void))
+			same_type: (Result and (a /= Void)) implies (b /= Void and then a.same_type (b))
+			symmetric: Result implies deep_equal (b, a)
+
+	frozen equal (a: detachable ANY; b: like arg #1): BOOLEAN
+			-- Are `a` and `b` either both void or attached
+			-- to objects considered equal?
+			-- (from ANY)
+		ensure -- from ANY
+			instance_free: class
+			definition: Result = (a = Void and b = Void) or else ((a /= Void and b /= Void) and then a.is_equal (b))
+
+	frozen is_deep_equal alias "≡≡≡" (other: SIMPLE_DATETIME): BOOLEAN
+			-- Are `Current` and `other` attached to isomorphic object structures?
+			-- (from ANY)
+		require -- from ANY
+			other_not_void: other /= Void
+		ensure -- from ANY
+			shallow_implies_deep: standard_is_equal (other) implies Result
+			same_type: Result implies same_type (other)
+			symmetric: Result implies other.is_deep_equal (Current)
+
+	is_equal (other: SIMPLE_DATETIME): BOOLEAN
+			-- Is `other` attached to an object considered
+			-- equal to current object?
+			-- (from ANY)
+		require -- from ANY
+			other_not_void: other /= Void
+		ensure -- from ANY
+			symmetric: Result implies other ~ Current
+			consistent: standard_is_equal (other) implies Result
+
+	frozen standard_equal (a: detachable ANY; b: like arg #1): BOOLEAN
+			-- Are `a` and `b` either both void or attached to
+			-- field-by-field identical objects of the same type?
+			-- Always uses default object comparison criterion.
+			-- (from ANY)
+		ensure -- from ANY
+			instance_free: class
+			definition: Result = (a = Void and b = Void) or else ((a /= Void and b /= Void) and then a.standard_is_equal (b))
+
+	frozen standard_is_equal alias "≜" (other: SIMPLE_DATETIME): BOOLEAN
+			-- Is `other` attached to an object of the same type
+			-- as current object, and field-by-field identical to it?
+			-- (from ANY)
+		require -- from ANY
+			other_not_void: other /= Void
+		ensure -- from ANY
+			same_type: Result implies same_type (other)
+			symmetric: Result implies other.standard_is_equal (Current)
+	
+feature -- Status report
+
+	conforms_to (other: ANY): BOOLEAN
+			-- Does type of current object conform to type
+			-- of `other` (as per Eiffel: The Language, chapter 13)?
+			-- (from ANY)
+		require -- from ANY
+			other_not_void: other /= Void
+
+	same_type (other: ANY): BOOLEAN
+			-- Is type of current object identical to type of `other`?
+			-- (from ANY)
+		require -- from ANY
+			other_not_void: other /= Void
+		ensure -- from ANY
+			definition: Result = (conforms_to (other) and other.conforms_to (Current))
+	
+feature -- Duplication
+
+	copy (other: SIMPLE_DATETIME)
+			-- Update current object using fields of object attached
+			-- to `other`, so as to yield equal objects.
+			-- (from ANY)
+		require -- from ANY
+			other_not_void: other /= Void
+			type_identity: same_type (other)
+		ensure -- from ANY
+			is_equal: Current ~ other
+
+	frozen deep_copy (other: SIMPLE_DATETIME)
+			-- Effect equivalent to that of:
+			--		`copy` (`other` . `deep_twin`)
+			-- (from ANY)
+		require -- from ANY
+			other_not_void: other /= Void
+		ensure -- from ANY
+			deep_equal: deep_equal (Current, other)
+
+	frozen deep_twin: SIMPLE_DATETIME
+			-- New object structure recursively duplicated from Current.
+			-- (from ANY)
+		ensure -- from ANY
+			deep_twin_not_void: Result /= Void
+			deep_equal: deep_equal (Current, Result)
+
+	frozen standard_copy (other: SIMPLE_DATETIME)
+			-- Copy every field of `other` onto corresponding field
+			-- of current object.
+			-- (from ANY)
+		require -- from ANY
+			other_not_void: other /= Void
+			type_identity: same_type (other)
+		ensure -- from ANY
+			is_standard_equal: standard_is_equal (other)
+
+	frozen standard_twin: SIMPLE_DATETIME
+			-- New object field-by-field identical to `other`.
+			-- Always uses default copying semantics.
+			-- (from ANY)
+		ensure -- from ANY
+			standard_twin_not_void: Result /= Void
+			equal: standard_equal (Result, Current)
+
+	frozen twin: SIMPLE_DATETIME
+			-- New object equal to `Current`
+			-- `twin` calls `copy`; to change copying/twinning semantics, redefine `copy`.
+			-- (from ANY)
+		ensure -- from ANY
+			twin_not_void: Result /= Void
+			is_equal: Result ~ Current
+	
+feature -- Basic operations
+
+	frozen default: detachable SIMPLE_DATETIME
+			-- Default value of object's type
+			-- (from ANY)
+
+	frozen default_pointer: POINTER
+			-- Default value of type `POINTER`
+			-- (Avoid the need to write `p`.`default` for
+			-- some `p` of type `POINTER`.)
+			-- (from ANY)
+		ensure -- from ANY
+			instance_free: class
+
+	default_rescue
+			-- Process exception for routines with no Rescue clause.
+			-- (Default: do nothing.)
+			-- (from ANY)
+
+	frozen do_nothing
+			-- Execute a null action.
+			-- (from ANY)
+		ensure -- from ANY
+			instance_free: class
+	
+feature -- Age Calculation (Innovative!)
+
+	age_between (a_start, a_end: SIMPLE_DATE): SIMPLE_AGE
+			-- Calculate age/duration between two dates.
+		require
+			start_not_void: a_start /= Void
+			end_not_void: a_end /= Void
+			start_before_end: a_start.is_before (a_end) or a_start.is_equal (a_end)
+		ensure
+			result_attached: Result /= Void
+
+	age_from (a_birthdate: SIMPLE_DATE): SIMPLE_AGE
+			-- Calculate age from birthdate to today.
+		require
+			birthdate_not_void: a_birthdate /= Void
+			birthdate_in_past: a_birthdate.is_before (today) or a_birthdate.is_equal (today)
+		ensure
+			result_attached: Result /= Void
+	
+feature -- Business Days (Innovative!)
+
+	add_business_days (a_date: SIMPLE_DATE; a_days: INTEGER_32): SIMPLE_DATE
+			-- Add `a_days` business days to `a_date` (skipping weekends).
+		require
+			date_not_void: a_date /= Void
+			days_positive: a_days >= 0
+		ensure
+			result_attached: Result /= Void
+
+	business_days_between (a_start, a_end: SIMPLE_DATE): INTEGER_32
+			-- Count business days between two dates.
+		require
+			start_not_void: a_start /= Void
+			end_not_void: a_end /= Void
+
+	is_business_day (a_date: SIMPLE_DATE): BOOLEAN
+			-- Is `a_date` a business day (weekday)?
+		require
+			date_not_void: a_date /= Void
+
+	next_business_day (a_date: SIMPLE_DATE): SIMPLE_DATE
+			-- Next business day after `a_date`.
+		require
+			date_not_void: a_date /= Void
+		ensure
+			result_attached: Result /= Void
+			is_weekday: Result.is_weekday
+	
+feature -- Date Range
+
+	date_range (a_start, a_end: SIMPLE_DATE): SIMPLE_DATE_RANGE
+			-- Create a date range between two dates.
+		require
+			start_not_void: a_start /= Void
+			end_not_void: a_end /= Void
+		ensure
+			result_attached: Result /= Void
+	
+feature -- Duration
+
+	days (a_count: INTEGER_32): SIMPLE_DURATION
+			-- Duration of `a_count` days.
+		ensure
+			result_attached: Result /= Void
+
+	duration: SIMPLE_DURATION
+			-- Create a new duration builder.
+		ensure
+			result_attached: Result /= Void
+
+	hours (a_count: INTEGER_32): SIMPLE_DURATION
+			-- Duration of `a_count` hours.
+		ensure
+			result_attached: Result /= Void
+
+	minutes (a_count: INTEGER_32): SIMPLE_DURATION
+			-- Duration of `a_count` minutes.
+		ensure
+			result_attached: Result /= Void
+	
+feature -- Factory: Creation
+
+	create_date (a_year, a_month, a_day: INTEGER_32): SIMPLE_DATE
+			-- Create date from components.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `date`, `new_date` and `make_date`.
+		require
+			valid_month: a_month >= 1 and a_month <= 12
+			valid_day: a_day >= 1 and a_day <= 31
+		ensure
+			result_attached: Result /= Void
+			year_set: Result.year = a_year
+			month_set: Result.month = a_month
+			day_set: Result.day = a_day
+
+	create_datetime (a_year, a_month, a_day, a_hour, a_minute, a_second: INTEGER_32): SIMPLE_DATE_TIME
+			-- Create datetime from components.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `datetime`, `new_datetime` and `make_datetime`.
+		require
+			valid_month: a_month >= 1 and a_month <= 12
+			valid_day: a_day >= 1 and a_day <= 31
+			valid_hour: a_hour >= 0 and a_hour <= 23
+			valid_minute: a_minute >= 0 and a_minute <= 59
+			valid_second: a_second >= 0 and a_second <= 59
+		ensure
+			result_attached: Result /= Void
+
+	create_time (a_hour, a_minute, a_second: INTEGER_32): SIMPLE_TIME
+			-- Create time from components.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `time`, `new_time` and `make_time`.
+		require
+			valid_hour: a_hour >= 0 and a_hour <= 23
+			valid_minute: a_minute >= 0 and a_minute <= 59
+			valid_second: a_second >= 0 and a_second <= 59
+		ensure
+			result_attached: Result /= Void
+			hour_set: Result.hour = a_hour
+			minute_set: Result.minute = a_minute
+			second_set: Result.second = a_second
+
+	date (a_year, a_month, a_day: INTEGER_32): SIMPLE_DATE
+			-- Create date from components.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `new_date`, `make_date` and `create_date`.
+		require
+			valid_month: a_month >= 1 and a_month <= 12
+			valid_day: a_day >= 1 and a_day <= 31
+		ensure
+			result_attached: Result /= Void
+			year_set: Result.year = a_year
+			month_set: Result.month = a_month
+			day_set: Result.day = a_day
+
+	datetime (a_year, a_month, a_day, a_hour, a_minute, a_second: INTEGER_32): SIMPLE_DATE_TIME
+			-- Create datetime from components.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `new_datetime`, `make_datetime` and `create_datetime`.
+		require
+			valid_month: a_month >= 1 and a_month <= 12
+			valid_day: a_day >= 1 and a_day <= 31
+			valid_hour: a_hour >= 0 and a_hour <= 23
+			valid_minute: a_minute >= 0 and a_minute <= 59
+			valid_second: a_second >= 0 and a_second <= 59
+		ensure
+			result_attached: Result /= Void
+
+	make_date (a_year, a_month, a_day: INTEGER_32): SIMPLE_DATE
+			-- Create date from components.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `date`, `new_date` and `create_date`.
+		require
+			valid_month: a_month >= 1 and a_month <= 12
+			valid_day: a_day >= 1 and a_day <= 31
+		ensure
+			result_attached: Result /= Void
+			year_set: Result.year = a_year
+			month_set: Result.month = a_month
+			day_set: Result.day = a_day
+
+	make_datetime (a_year, a_month, a_day, a_hour, a_minute, a_second: INTEGER_32): SIMPLE_DATE_TIME
+			-- Create datetime from components.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `datetime`, `new_datetime` and `create_datetime`.
+		require
+			valid_month: a_month >= 1 and a_month <= 12
+			valid_day: a_day >= 1 and a_day <= 31
+			valid_hour: a_hour >= 0 and a_hour <= 23
+			valid_minute: a_minute >= 0 and a_minute <= 59
+			valid_second: a_second >= 0 and a_second <= 59
+		ensure
+			result_attached: Result /= Void
+
+	make_time (a_hour, a_minute, a_second: INTEGER_32): SIMPLE_TIME
+			-- Create time from components.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `time`, `new_time` and `create_time`.
+		require
+			valid_hour: a_hour >= 0 and a_hour <= 23
+			valid_minute: a_minute >= 0 and a_minute <= 59
+			valid_second: a_second >= 0 and a_second <= 59
+		ensure
+			result_attached: Result /= Void
+			hour_set: Result.hour = a_hour
+			minute_set: Result.minute = a_minute
+			second_set: Result.second = a_second
+
+	new_date (a_year, a_month, a_day: INTEGER_32): SIMPLE_DATE
+			-- Create date from components.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `date`, `make_date` and `create_date`.
+		require
+			valid_month: a_month >= 1 and a_month <= 12
+			valid_day: a_day >= 1 and a_day <= 31
+		ensure
+			result_attached: Result /= Void
+			year_set: Result.year = a_year
+			month_set: Result.month = a_month
+			day_set: Result.day = a_day
+
+	new_datetime (a_year, a_month, a_day, a_hour, a_minute, a_second: INTEGER_32): SIMPLE_DATE_TIME
+			-- Create datetime from components.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `datetime`, `make_datetime` and `create_datetime`.
+		require
+			valid_month: a_month >= 1 and a_month <= 12
+			valid_day: a_day >= 1 and a_day <= 31
+			valid_hour: a_hour >= 0 and a_hour <= 23
+			valid_minute: a_minute >= 0 and a_minute <= 59
+			valid_second: a_second >= 0 and a_second <= 59
+		ensure
+			result_attached: Result /= Void
+
+	new_time (a_hour, a_minute, a_second: INTEGER_32): SIMPLE_TIME
+			-- Create time from components.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `time`, `make_time` and `create_time`.
+		require
+			valid_hour: a_hour >= 0 and a_hour <= 23
+			valid_minute: a_minute >= 0 and a_minute <= 59
+			valid_second: a_second >= 0 and a_second <= 59
+		ensure
+			result_attached: Result /= Void
+			hour_set: Result.hour = a_hour
+			minute_set: Result.minute = a_minute
+			second_set: Result.second = a_second
+
+	time (a_hour, a_minute, a_second: INTEGER_32): SIMPLE_TIME
+			-- Create time from components.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `new_time`, `make_time` and `create_time`.
+		require
+			valid_hour: a_hour >= 0 and a_hour <= 23
+			valid_minute: a_minute >= 0 and a_minute <= 59
+			valid_second: a_second >= 0 and a_second <= 59
+		ensure
+			result_attached: Result /= Void
+			hour_set: Result.hour = a_hour
+			minute_set: Result.minute = a_minute
+			second_set: Result.second = a_second
+	
+feature -- Factory: Current Time
+
+	current_date: SIMPLE_DATE
+			-- Today's date.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `today` and `todays_date`.
+		ensure
+			result_attached: Result /= Void
+
+	current_datetime: SIMPLE_DATE_TIME
+			-- Current date and time in local timezone.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `now`, `current_time` and `timestamp`.
+		ensure
+			result_attached: Result /= Void
+
+	current_time: SIMPLE_DATE_TIME
+			-- Current date and time in local timezone.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `now`, `current_datetime` and `timestamp`.
+		ensure
+			result_attached: Result /= Void
+
+	current_utc: SIMPLE_DATE_TIME
+			-- Current date and time in UTC.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `utc_now` and `utc_timestamp`.
+		ensure
+			result_attached: Result /= Void
+
+	now: SIMPLE_DATE_TIME
+			-- Current date and time in local timezone.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `current_time`, `current_datetime` and `timestamp`.
+		ensure
+			result_attached: Result /= Void
+
+	timestamp: SIMPLE_DATE_TIME
+			-- Current date and time in local timezone.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `now`, `current_time` and `current_datetime`.
+		ensure
+			result_attached: Result /= Void
+
+	today: SIMPLE_DATE
+			-- Today's date.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `current_date` and `todays_date`.
+		ensure
+			result_attached: Result /= Void
+
+	todays_date: SIMPLE_DATE
+			-- Today's date.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `today` and `current_date`.
+		ensure
+			result_attached: Result /= Void
+
+	tomorrow: SIMPLE_DATE
+			-- Tomorrow's date.
+		ensure
+			result_attached: Result /= Void
+
+	utc_now: SIMPLE_DATE_TIME
+			-- Current date and time in UTC.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `utc_timestamp` and `current_utc`.
+		ensure
+			result_attached: Result /= Void
+
+	utc_timestamp: SIMPLE_DATE_TIME
+			-- Current date and time in UTC.
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `utc_now` and `current_utc`.
+		ensure
+			result_attached: Result /= Void
+
+	yesterday: SIMPLE_DATE
+			-- Yesterday's date.
+		ensure
+			result_attached: Result /= Void
+	
+feature -- Factory: From Timestamp
+
+	from_epoch (a_unix_timestamp: INTEGER_64): SIMPLE_DATE_TIME
+			-- Create datetime from Unix timestamp (seconds since 1970-01-01).
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `from_timestamp`, `from_unix` and `unix_to_datetime`.
+		ensure
+			result_attached: Result /= Void
+
+	from_timestamp (a_unix_timestamp: INTEGER_64): SIMPLE_DATE_TIME
+			-- Create datetime from Unix timestamp (seconds since 1970-01-01).
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `from_unix`, `from_epoch` and `unix_to_datetime`.
+		ensure
+			result_attached: Result /= Void
+
+	from_unix (a_unix_timestamp: INTEGER_64): SIMPLE_DATE_TIME
+			-- Create datetime from Unix timestamp (seconds since 1970-01-01).
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `from_timestamp`, `from_epoch` and `unix_to_datetime`.
+		ensure
+			result_attached: Result /= Void
+
+	unix_to_datetime (a_unix_timestamp: INTEGER_64): SIMPLE_DATE_TIME
+			-- Create datetime from Unix timestamp (seconds since 1970-01-01).
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `from_timestamp`, `from_unix` and `from_epoch`.
+		ensure
+			result_attached: Result /= Void
+	
+feature -- Human-Friendly Output (Innovative!)
+
+	time_ago (a_datetime: SIMPLE_DATE_TIME): STRING_8
+			-- Human-readable relative time in past.
+			-- Examples: "just now", "5 minutes ago", "2 hours ago", "yesterday", "3 days ago"
+		require
+			datetime_not_void: a_datetime /= Void
+		ensure
+			result_attached: Result /= Void
+
+	time_until (a_datetime: SIMPLE_DATE_TIME): STRING_8
+			-- Human-readable relative time in future.
+			-- Examples: "in 5 minutes", "in 2 hours", "tomorrow", "in 3 days"
+		require
+			datetime_not_void: a_datetime /= Void
+		ensure
+			result_attached: Result /= Void
+	
+feature -- Output
+
+	Io: STD_FILES
+			-- Handle to standard file setup
+			-- (from ANY)
+		ensure -- from ANY
+			instance_free: class
+			io_not_void: Result /= Void
+
+	out: STRING_8
+			-- New string containing terse printable representation
+			-- of current object
+			-- (from ANY)
+		ensure -- from ANY
+			out_not_void: Result /= Void
+
+	print (o: detachable ANY)
+			-- Write terse external representation of `o`
+			-- on standard output.
+			-- (from ANY)
+		ensure -- from ANY
+			instance_free: class
+
+	frozen tagged_out: STRING_8
+			-- New string containing terse printable representation
+			-- of current object
+			-- (from ANY)
+		ensure -- from ANY
+			tagged_out_not_void: Result /= Void
+	
+feature -- Parsing
+
+	date_from_string (a_string: STRING_8): SIMPLE_DATE
+			-- Parse date from string, trying common formats.
+			-- Supports: YYYY-MM-DD, MM/DD/YYYY, DD.MM.YYYY
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `parse_date`, `decode_date` and `string_to_date`.
+		require
+			string_not_empty: a_string /= Void and then not a_string.is_empty
+		ensure
+			result_attached: Result /= Void
+
+	datetime_from_string (a_string: STRING_8): SIMPLE_DATE_TIME
+			-- Parse datetime from string, trying common formats.
+			-- Supports: ISO 8601 and common variants
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `parse_datetime`, `decode_datetime` and `string_to_datetime`.
+		require
+			string_not_empty: a_string /= Void and then not a_string.is_empty
+		ensure
+			result_attached: Result /= Void
+
+	decode_date (a_string: STRING_8): SIMPLE_DATE
+			-- Parse date from string, trying common formats.
+			-- Supports: YYYY-MM-DD, MM/DD/YYYY, DD.MM.YYYY
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `parse_date`, `date_from_string` and `string_to_date`.
+		require
+			string_not_empty: a_string /= Void and then not a_string.is_empty
+		ensure
+			result_attached: Result /= Void
+
+	decode_datetime (a_string: STRING_8): SIMPLE_DATE_TIME
+			-- Parse datetime from string, trying common formats.
+			-- Supports: ISO 8601 and common variants
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `parse_datetime`, `datetime_from_string` and `string_to_datetime`.
+		require
+			string_not_empty: a_string /= Void and then not a_string.is_empty
+		ensure
+			result_attached: Result /= Void
+
+	decode_iso8601 (a_string: STRING_8): SIMPLE_DATE_TIME
+			-- Parse ISO 8601 formatted datetime.
+			-- Format: YYYY-MM-DDTHH:MM:SS or YYYY-MM-DDTHH:MM:SSZ
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `parse_iso8601`, `from_iso8601` and `iso_to_datetime`.
+		require
+			string_not_empty: a_string /= Void and then not a_string.is_empty
+		ensure
+			result_attached: Result /= Void
+
+	from_iso8601 (a_string: STRING_8): SIMPLE_DATE_TIME
+			-- Parse ISO 8601 formatted datetime.
+			-- Format: YYYY-MM-DDTHH:MM:SS or YYYY-MM-DDTHH:MM:SSZ
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `parse_iso8601`, `decode_iso8601` and `iso_to_datetime`.
+		require
+			string_not_empty: a_string /= Void and then not a_string.is_empty
+		ensure
+			result_attached: Result /= Void
+
+	iso_to_datetime (a_string: STRING_8): SIMPLE_DATE_TIME
+			-- Parse ISO 8601 formatted datetime.
+			-- Format: YYYY-MM-DDTHH:MM:SS or YYYY-MM-DDTHH:MM:SSZ
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `parse_iso8601`, `decode_iso8601` and `from_iso8601`.
+		require
+			string_not_empty: a_string /= Void and then not a_string.is_empty
+		ensure
+			result_attached: Result /= Void
+
+	parse_date (a_string: STRING_8): SIMPLE_DATE
+			-- Parse date from string, trying common formats.
+			-- Supports: YYYY-MM-DD, MM/DD/YYYY, DD.MM.YYYY
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `decode_date`, `date_from_string` and `string_to_date`.
+		require
+			string_not_empty: a_string /= Void and then not a_string.is_empty
+		ensure
+			result_attached: Result /= Void
+
+	parse_datetime (a_string: STRING_8): SIMPLE_DATE_TIME
+			-- Parse datetime from string, trying common formats.
+			-- Supports: ISO 8601 and common variants
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `decode_datetime`, `datetime_from_string` and `string_to_datetime`.
+		require
+			string_not_empty: a_string /= Void and then not a_string.is_empty
+		ensure
+			result_attached: Result /= Void
+
+	parse_iso8601 (a_string: STRING_8): SIMPLE_DATE_TIME
+			-- Parse ISO 8601 formatted datetime.
+			-- Format: YYYY-MM-DDTHH:MM:SS or YYYY-MM-DDTHH:MM:SSZ
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `decode_iso8601`, `from_iso8601` and `iso_to_datetime`.
+		require
+			string_not_empty: a_string /= Void and then not a_string.is_empty
+		ensure
+			result_attached: Result /= Void
+
+	string_to_date (a_string: STRING_8): SIMPLE_DATE
+			-- Parse date from string, trying common formats.
+			-- Supports: YYYY-MM-DD, MM/DD/YYYY, DD.MM.YYYY
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `parse_date`, `decode_date` and `date_from_string`.
+		require
+			string_not_empty: a_string /= Void and then not a_string.is_empty
+		ensure
+			result_attached: Result /= Void
+
+	string_to_datetime (a_string: STRING_8): SIMPLE_DATE_TIME
+			-- Parse datetime from string, trying common formats.
+			-- Supports: ISO 8601 and common variants
+			-- Was declared in {SIMPLE_DATETIME} as synonym of `parse_datetime`, `decode_datetime` and `datetime_from_string`.
+		require
+			string_not_empty: a_string /= Void and then not a_string.is_empty
+		ensure
+			result_attached: Result /= Void
+	
+feature -- Platform
+
+	Operating_environment: OPERATING_ENVIRONMENT
+			-- Objects available from the operating system
+			-- (from ANY)
+		ensure -- from ANY
+			instance_free: class
+			operating_environment_not_void: Result /= Void
+	
+feature -- Relative Dates (Innovative!)
+
+	first_of_month: SIMPLE_DATE
+			-- First day of current month.
+		ensure
+			result_attached: Result /= Void
+			is_first: Result.day = 1
+
+	first_of_next_month: SIMPLE_DATE
+			-- First day of next month.
+		ensure
+			result_attached: Result /= Void
+
+	first_of_year: SIMPLE_DATE
+			-- First day of current year.
+		ensure
+			result_attached: Result /= Void
+			is_january_first: Result.month = 1 and Result.day = 1
+
+	last_friday: SIMPLE_DATE
+			-- Last Friday (most recent past Friday).
+		ensure
+			result_attached: Result /= Void
+
+	last_monday: SIMPLE_DATE
+			-- Last Monday (most recent past Monday).
+		ensure
+			result_attached: Result /= Void
+
+	last_of_month: SIMPLE_DATE
+			-- Last day of current month.
+		ensure
+			result_attached: Result /= Void
+
+	last_of_year: SIMPLE_DATE
+			-- Last day of current year.
+		ensure
+			result_attached: Result /= Void
+			is_december_31: Result.month = 12 and Result.day = 31
+
+	next_friday: SIMPLE_DATE
+			-- Next Friday from today.
+		ensure
+			result_attached: Result /= Void
+
+	next_monday: SIMPLE_DATE
+			-- Next Monday from today.
+		ensure
+			result_attached: Result /= Void
+			is_monday: Result.day_of_week = 1
+
+	next_thursday: SIMPLE_DATE
+			-- Next Thursday from today.
+		ensure
+			result_attached: Result /= Void
+
+	next_tuesday: SIMPLE_DATE
+			-- Next Tuesday from today.
+		ensure
+			result_attached: Result /= Void
+
+	next_wednesday: SIMPLE_DATE
+			-- Next Wednesday from today.
+		ensure
+			result_attached: Result /= Void
+	
+invariant
+		-- from ANY
+	reflexive_equality: standard_is_equal (Current)
+	reflexive_conformance: conforms_to (Current)
+
+end -- class SIMPLE_DATETIME
+
