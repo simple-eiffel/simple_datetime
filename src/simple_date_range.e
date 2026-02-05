@@ -132,8 +132,8 @@ feature -- Comparison (MML_MODEL implementation)
 			-- Does this date range model equal `other'?
 			-- Two date ranges are model-equal iff they cover the same interval.
 		do
-			if attached {SIMPLE_DATE_RANGE} a_other as other_range then
-				Result := date_interval |=| other_range.date_interval
+			if attached {SIMPLE_DATE_RANGE} a_other as al_other_range then
+				Result := date_interval |=| al_other_range.date_interval
 			end
 		ensure then
 			same_interval: attached {SIMPLE_DATE_RANGE} a_other as r implies (Result = (date_interval |=| r.date_interval))
