@@ -265,40 +265,40 @@ feature -- Status
 
 feature -- Comparison
 
-	is_before (other: SIMPLE_DATE_TIME): BOOLEAN
+	is_before (a_other: SIMPLE_DATE_TIME): BOOLEAN
 			-- Is this datetime before `other'?
 		require
-			other_not_void: other /= Void
+			other_not_void: a_other /= Void
 		do
-			Result := internal_datetime < other.internal_datetime
+			Result := internal_datetime < a_other.internal_datetime
 		end
 
-	is_after (other: SIMPLE_DATE_TIME): BOOLEAN
+	is_after (a_other: SIMPLE_DATE_TIME): BOOLEAN
 			-- Is this datetime after `other'?
 		require
-			other_not_void: other /= Void
+			other_not_void: a_other /= Void
 		do
-			Result := internal_datetime > other.internal_datetime
+			Result := internal_datetime > a_other.internal_datetime
 		end
 
-	is_less alias "<" (other: SIMPLE_DATE_TIME): BOOLEAN
+	is_less alias "<" (a_other: SIMPLE_DATE_TIME): BOOLEAN
 			-- Is this datetime before `other'?
 		do
-			Result := internal_datetime < other.internal_datetime
+			Result := internal_datetime < a_other.internal_datetime
 		end
 
-	is_equal (other: SIMPLE_DATE_TIME): BOOLEAN
+	is_equal (a_other: SIMPLE_DATE_TIME): BOOLEAN
 			-- Is this datetime equal to `other'?
 		do
-			Result := internal_datetime.is_equal (other.internal_datetime)
+			Result := internal_datetime.is_equal (a_other.internal_datetime)
 		end
 
-	seconds_between (other: SIMPLE_DATE_TIME): INTEGER_64
+	seconds_between (a_other: SIMPLE_DATE_TIME): INTEGER_64
 			-- Number of seconds between this datetime and `other'.
 		require
-			other_not_void: other /= Void
+			other_not_void: a_other /= Void
 		do
-			Result := other.to_timestamp - to_timestamp
+			Result := a_other.to_timestamp - to_timestamp
 		end
 
 feature -- Arithmetic

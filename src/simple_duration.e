@@ -219,36 +219,36 @@ feature -- Status
 
 feature -- Comparison
 
-	is_less alias "<" (other: SIMPLE_DURATION): BOOLEAN
+	is_less alias "<" (a_other: SIMPLE_DURATION): BOOLEAN
 			-- Is this duration less than `other'?
 		do
-			Result := total_seconds_internal < other.total_seconds_internal
+			Result := total_seconds_internal < a_other.total_seconds_internal
 		end
 
-	is_equal (other: SIMPLE_DURATION): BOOLEAN
+	is_equal (a_other: SIMPLE_DURATION): BOOLEAN
 			-- Is this duration equal to `other'?
 		do
-			Result := total_seconds_internal = other.total_seconds_internal
+			Result := total_seconds_internal = a_other.total_seconds_internal
 		end
 
 feature -- Arithmetic
 
-	plus alias "+" (other: SIMPLE_DURATION): SIMPLE_DURATION
+	plus alias "+" (a_other: SIMPLE_DURATION): SIMPLE_DURATION
 			-- Sum of this duration and `other'.
 		require
-			other_not_void: other /= Void
+			other_not_void: a_other /= Void
 		do
-			create Result.make_seconds (total_seconds_internal + other.total_seconds_internal)
+			create Result.make_seconds (total_seconds_internal + a_other.total_seconds_internal)
 		ensure
 			result_attached: Result /= Void
 		end
 
-	minus alias "-" (other: SIMPLE_DURATION): SIMPLE_DURATION
+	minus alias "-" (a_other: SIMPLE_DURATION): SIMPLE_DURATION
 			-- Difference between this duration and `other'.
 		require
-			other_not_void: other /= Void
+			other_not_void: a_other /= Void
 		do
-			create Result.make_seconds (total_seconds_internal - other.total_seconds_internal)
+			create Result.make_seconds (total_seconds_internal - a_other.total_seconds_internal)
 		ensure
 			result_attached: Result /= Void
 		end

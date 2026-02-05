@@ -241,41 +241,41 @@ feature -- Status
 
 feature -- Comparison
 
-	is_before (other: SIMPLE_DATE): BOOLEAN
+	is_before (a_other: SIMPLE_DATE): BOOLEAN
 			-- Is this date before `other'?
 		require
-			other_not_void: other /= Void
+			other_not_void: a_other /= Void
 		do
-			Result := internal_date < other.internal_date
+			Result := internal_date < a_other.internal_date
 		end
 
-	is_after (other: SIMPLE_DATE): BOOLEAN
+	is_after (a_other: SIMPLE_DATE): BOOLEAN
 			-- Is this date after `other'?
 		require
-			other_not_void: other /= Void
+			other_not_void: a_other /= Void
 		do
-			Result := internal_date > other.internal_date
+			Result := internal_date > a_other.internal_date
 		end
 
-	is_less alias "<" (other: SIMPLE_DATE): BOOLEAN
+	is_less alias "<" (a_other: SIMPLE_DATE): BOOLEAN
 			-- Is this date before `other'?
 		do
-			Result := internal_date < other.internal_date
+			Result := internal_date < a_other.internal_date
 		end
 
-	is_equal (other: SIMPLE_DATE): BOOLEAN
+	is_equal (a_other: SIMPLE_DATE): BOOLEAN
 			-- Is this date equal to `other'?
 		do
-			Result := internal_date.is_equal (other.internal_date)
+			Result := internal_date.is_equal (a_other.internal_date)
 		end
 
-	days_between (other: SIMPLE_DATE): INTEGER
+	days_between (a_other: SIMPLE_DATE): INTEGER
 			-- Number of days between this date and `other'.
 			-- Positive if `other' is after this date.
 		require
-			other_not_void: other /= Void
+			other_not_void: a_other /= Void
 		do
-			Result := other.internal_date.days - internal_date.days
+			Result := a_other.internal_date.days - internal_date.days
 		end
 
 feature -- Arithmetic
@@ -393,22 +393,22 @@ feature -- Business Days (Innovative!)
 			is_weekday: a_days > 0 implies Result.is_weekday
 		end
 
-	business_days_until (other: SIMPLE_DATE): INTEGER
+	business_days_until (a_other: SIMPLE_DATE): INTEGER
 			-- Count of business days between this date and `other'.
 		require
-			other_not_void: other /= Void
+			other_not_void: a_other /= Void
 		local
 			l_current: SIMPLE_DATE
 			l_end: SIMPLE_DATE
 			l_count: INTEGER
 			l_forward: BOOLEAN
 		do
-			if is_before (other) then
+			if is_before (a_other) then
 				l_current := Current
-				l_end := other
+				l_end := a_other
 				l_forward := True
 			else
-				l_current := other
+				l_current := a_other
 				l_end := Current
 				l_forward := False
 			end

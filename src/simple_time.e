@@ -229,41 +229,41 @@ feature -- Status (Influenced by Pylon)
 
 feature -- Comparison
 
-	is_before (other: SIMPLE_TIME): BOOLEAN
+	is_before (a_other: SIMPLE_TIME): BOOLEAN
 			-- Is this time before `other'?
 		require
-			other_not_void: other /= Void
+			other_not_void: a_other /= Void
 		do
-			Result := internal_time < other.internal_time
+			Result := internal_time < a_other.internal_time
 		end
 
-	is_after (other: SIMPLE_TIME): BOOLEAN
+	is_after (a_other: SIMPLE_TIME): BOOLEAN
 			-- Is this time after `other'?
 		require
-			other_not_void: other /= Void
+			other_not_void: a_other /= Void
 		do
-			Result := internal_time > other.internal_time
+			Result := internal_time > a_other.internal_time
 		end
 
-	is_less alias "<" (other: SIMPLE_TIME): BOOLEAN
+	is_less alias "<" (a_other: SIMPLE_TIME): BOOLEAN
 			-- Is this time before `other'?
 		do
-			Result := internal_time < other.internal_time
+			Result := internal_time < a_other.internal_time
 		end
 
-	is_equal (other: SIMPLE_TIME): BOOLEAN
+	is_equal (a_other: SIMPLE_TIME): BOOLEAN
 			-- Is this time equal to `other'?
 		do
-			Result := internal_time.is_equal (other.internal_time)
+			Result := internal_time.is_equal (a_other.internal_time)
 		end
 
-	seconds_between (other: SIMPLE_TIME): INTEGER
+	seconds_between (a_other: SIMPLE_TIME): INTEGER
 			-- Number of seconds between this time and `other'.
 			-- Positive if `other' is after this time.
 		require
-			other_not_void: other /= Void
+			other_not_void: a_other /= Void
 		do
-			Result := other.seconds_since_midnight - seconds_since_midnight
+			Result := a_other.seconds_since_midnight - seconds_since_midnight
 		end
 
 feature -- Arithmetic

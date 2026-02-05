@@ -128,15 +128,15 @@ feature -- Model Query (MML)
 
 feature -- Comparison (MML_MODEL implementation)
 
-	is_model_equal alias "|=|" (other: MML_MODEL): BOOLEAN
+	is_model_equal alias "|=|" (a_other: MML_MODEL): BOOLEAN
 			-- Does this date range model equal `other'?
 			-- Two date ranges are model-equal iff they cover the same interval.
 		do
-			if attached {SIMPLE_DATE_RANGE} other as other_range then
+			if attached {SIMPLE_DATE_RANGE} a_other as other_range then
 				Result := date_interval |=| other_range.date_interval
 			end
 		ensure then
-			same_interval: attached {SIMPLE_DATE_RANGE} other as r implies (Result = (date_interval |=| r.date_interval))
+			same_interval: attached {SIMPLE_DATE_RANGE} a_other as r implies (Result = (date_interval |=| r.date_interval))
 		end
 
 feature -- Measurement
@@ -203,27 +203,27 @@ feature -- Status
 			Result := contains (l_today)
 		end
 
-	overlaps (other: SIMPLE_DATE_RANGE): BOOLEAN
+	overlaps (a_other: SIMPLE_DATE_RANGE): BOOLEAN
 			-- Does this range overlap with `other'?
 			-- Two ranges overlap iff their intersection is non-empty.
 		do
-			Result := contains (other.start_date) or contains (other.end_date) or
-				other.contains (start_date) or other.contains (end_date)
+			Result := contains (a_other.start_date) or contains (a_other.end_date) or
+				a_other.contains (start_date) or a_other.contains (end_date)
 		ensure
-			model_definition: Result = not (date_interval * other.date_interval).is_empty
-			symmetric: Result = other.overlaps (Current)
+			model_definition: Result = not (date_interval * a_other.date_interval).is_empty
+			symmetric: Result = a_other.overlaps (Current)
 		end
 
-	is_adjacent (other: SIMPLE_DATE_RANGE): BOOLEAN
+	is_adjacent (a_other: SIMPLE_DATE_RANGE): BOOLEAN
 			-- Is this range adjacent to `other' (no gap, no overlap)?
 		do
-			Result := end_date.plus_days (1).is_equal (other.start_date) or
-				other.end_date.plus_days (1).is_equal (start_date)
+			Result := end_date.plus_days (1).is_equal (a_other.start_date) or
+				a_other.end_date.plus_days (1).is_equal (start_date)
 		ensure
-			model_no_overlap: Result implies not overlaps (other)
-			model_no_gap: Result implies (date_interval.upper + 1 = other.date_interval.lower or
-				other.date_interval.upper + 1 = date_interval.lower)
-			symmetric: Result = other.is_adjacent (Current)
+			model_no_overlap: Result implies not overlaps (a_other)
+			model_no_gap: Result implies (date_interval.upper + 1 = a_other.date_interval.lower or
+				a_other.date_interval.upper + 1 = date_interval.lower)
+			symmetric: Result = a_other.is_adjacent (Current)
 		end
 
 	is_past: BOOLEAN
@@ -258,64 +258,64 @@ feature -- Status
 
 feature -- Operations
 
-	intersection (other: SIMPLE_DATE_RANGE): detachable SIMPLE_DATE_RANGE
+	intersection (a_other: SIMPLE_DATE_RANGE): detachable SIMPLE_DATE_RANGE
 			-- Intersection of this range with `other', or Void if no overlap.
 		local
 			l_start, l_end: SIMPLE_DATE
 		do
-			if overlaps (other) then
+			if overlaps (a_other) then
 				-- Start is the later of the two starts
-				if start_date.is_after (other.start_date) then
+				if start_date.is_after (a_other.start_date) then
 					l_start := start_date
 				else
-					l_start := other.start_date
+					l_start := a_other.start_date
 				end
 
 				-- End is the earlier of the two ends
-				if end_date.is_before (other.end_date) then
+				if end_date.is_before (a_other.end_date) then
 					l_end := end_date
 				else
-					l_end := other.end_date
+					l_end := a_other.end_date
 				end
 
 				create Result.make (l_start, l_end)
 			end
 		ensure
-			void_when_disjoint: not overlaps (other) implies Result = Void
-			attached_when_overlap: overlaps (other) implies Result /= Void
+			void_when_disjoint: not overlaps (a_other) implies Result = Void
+			attached_when_overlap: overlaps (a_other) implies Result /= Void
 			result_subset_of_self: attached Result as r implies (r.date_interval <= date_interval)
-			result_subset_of_other: attached Result as r implies (r.date_interval <= other.date_interval)
-			model_definition: attached Result as r implies (r.date_interval |=| (date_interval * other.date_interval))
+			result_subset_of_other: attached Result as r implies (r.date_interval <= a_other.date_interval)
+			model_definition: attached Result as r implies (r.date_interval |=| (date_interval * a_other.date_interval))
 		end
 
-	union (other: SIMPLE_DATE_RANGE): SIMPLE_DATE_RANGE
+	union (a_other: SIMPLE_DATE_RANGE): SIMPLE_DATE_RANGE
 			-- Union of this range with `other' (smallest contiguous range containing both).
 			-- Note: Returns hull (bounding box), not strict set union.
 		local
 			l_start, l_end: SIMPLE_DATE
 		do
 			-- Start is the earlier of the two starts
-			if start_date.is_before (other.start_date) then
+			if start_date.is_before (a_other.start_date) then
 				l_start := start_date
 			else
-				l_start := other.start_date
+				l_start := a_other.start_date
 			end
 
 			-- End is the later of the two ends
-			if end_date.is_after (other.end_date) then
+			if end_date.is_after (a_other.end_date) then
 				l_end := end_date
 			else
-				l_end := other.end_date
+				l_end := a_other.end_date
 			end
 
 			create Result.make (l_start, l_end)
 		ensure
 			contains_this: Result.contains (start_date) and Result.contains (end_date)
-			contains_other: Result.contains (other.start_date) and Result.contains (other.end_date)
+			contains_other: Result.contains (a_other.start_date) and Result.contains (a_other.end_date)
 			model_superset_of_self: date_interval <= Result.date_interval
-			model_superset_of_other: other.date_interval <= Result.date_interval
-			model_hull: Result.date_interval |=| (date_interval |+| other.date_interval)
-			symmetric: Result.date_interval |=| other.union (Current).date_interval
+			model_superset_of_other: a_other.date_interval <= Result.date_interval
+			model_hull: Result.date_interval |=| (date_interval |+| a_other.date_interval)
+			symmetric: Result.date_interval |=| a_other.union (Current).date_interval
 		end
 
 	expanded_by (a_days: INTEGER): SIMPLE_DATE_RANGE
