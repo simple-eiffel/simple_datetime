@@ -1,0 +1,65 @@
+# Phase 1m MML Coverage Report
+# Project: D:\prod\simple_datetime
+# Date: 2026-02-06
+# Mode: retrofit
+
+## Collection Attributes Found
+| Class | Attribute | Type | MML Type |
+|-------|-----------|------|----------|
+| (none) | — | — | — |
+
+No collection attributes (ARRAY, ARRAYED_LIST, HASH_TABLE, etc.) found in any of the 8 source classes.
+
+## Classes Scanned
+| Class | Attributes | Notes |
+|-------|-----------|-------|
+| SIMPLE_DATETIME | (none) | Stateless facade with factory methods |
+| SIMPLE_DATE | internal_date: DATE | Wraps ISE DATE; no collection |
+| SIMPLE_TIME | internal_time: TIME | Wraps ISE TIME; no collection |
+| SIMPLE_DATE_TIME | internal_datetime: DATE_TIME, is_utc: BOOLEAN | Wraps ISE DATE_TIME; no collection |
+| SIMPLE_DURATION | total_seconds_internal: INTEGER_64 | Single scalar attribute |
+| SIMPLE_DATE_RANGE | start_date, end_date: SIMPLE_DATE | Already has MML_INTERVAL model |
+| SIMPLE_DATE_RANGE_CURSOR | start/end/current_date: SIMPLE_DATE | Iteration cursor; scalars only |
+| SIMPLE_AGE | internal_years/months/days: INTEGER | Scalars only |
+
+## Existing MML Coverage (SIMPLE_DATE_RANGE)
+| Feature | MML Usage | Status |
+|---------|-----------|--------|
+| date_interval | MML_INTERVAL model query | VERIFIED |
+| make postcondition | model_count: date_interval.count = total_days | VERIFIED |
+| make_week postcondition | model_count: date_interval.count = 7 | VERIFIED |
+| make_month postcondition | model_count: date_interval.count = total_days | VERIFIED |
+| contains postcondition | model_definition via date_interval.has | VERIFIED |
+| overlaps postcondition | model_definition via interval intersection | VERIFIED |
+| is_adjacent postcondition | model_no_overlap, model_no_gap | VERIFIED |
+| intersection postcondition | model_definition via interval intersection | VERIFIED |
+| union postcondition | model_hull via interval hull | VERIFIED |
+| expanded_by postcondition | covers_original via interval subset | VERIFIED |
+| shifted_by postcondition | shifted_lower, shifted_upper | VERIFIED |
+| dates postcondition | model_count: Result.count = date_interval.count | VERIFIED |
+| is_model_equal | MML_MODEL implementation via |=| | VERIFIED |
+| invariant | model_interval_valid, model_bounds | VERIFIED |
+
+## Model Queries Added/Verified
+| Class | Query | MML Type | Status |
+|-------|-------|----------|--------|
+| SIMPLE_DATE_RANGE | date_interval | MML_INTERVAL | VERIFIED (already present) |
+
+## Contracts Strengthened
+- Postconditions added/enriched: 0
+- Preconditions added/enriched: 0
+- Frame conditions added: 0
+- Invariants added/enriched: 0
+
+## ECF
+No changes needed - simple_mml dependency already present.
+
+## Compilation
+N/A - No source changes made.
+
+## Coverage Assessment
+FULL
+
+SIMPLE_DATE_RANGE already has comprehensive MML_INTERVAL model with rich model-based
+contracts (postconditions, invariants, frame conditions). All other classes have only
+scalar attributes or wrap ISE library types (DATE, TIME, DATE_TIME) — no MML applicable.
