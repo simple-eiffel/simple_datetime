@@ -8,6 +8,27 @@ class
 inherit
 	TEST_SET_BASE
 
+feature -- SIMPLE_TIME parsing (regression)
+
+	test_time_bare_24h_noon_hour_kept
+			-- A bare "12:MM:SS" is 24-hour text: noon must stay noon (it used to become
+			-- 00:MM:SS, shifting every ISO round trip through the noon hour by twelve
+			-- hours). Explicit "12 AM" stays midnight and "12 PM" noon.
+		local
+			t: SIMPLE_TIME
+		do
+			create t.make_from_string ("12:30:00")
+			assert ("bare noon kept", t.hour = 12 and t.minute = 30 and t.second = 0)
+			create t.make_from_string ("12:30 AM")
+			assert ("12 AM is midnight", t.hour = 0 and t.minute = 30)
+			create t.make_from_string ("12:30 PM")
+			assert ("12 PM is noon", t.hour = 12 and t.minute = 30)
+			create t.make_from_string ("11:59:59 PM")
+			assert ("pm adds twelve", t.hour = 23 and t.minute = 59 and t.second = 59)
+			create t.make_from_string ("00:15:00")
+			assert ("midnight kept", t.hour = 0 and t.minute = 15)
+		end
+
 feature -- SIMPLE_DATE Tests
 
 	test_date_creation

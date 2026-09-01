@@ -24,6 +24,7 @@ feature {NONE} -- Initialization
 
 			-- SIMPLE_DATE tests
 			io.put_string ("SIMPLE_DATE Tests:%N")
+			run_test (agent tests.test_time_bare_24h_noon_hour_kept, "test_time_bare_24h_noon_hour_kept")
 			run_test (agent tests.test_date_creation, "test_date_creation")
 			run_test (agent tests.test_date_iso8601, "test_date_iso8601")
 			run_test (agent tests.test_date_american_format, "test_date_american_format")
