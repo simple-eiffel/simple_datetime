@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1] - 2026-09-01
+
+### Fixed
+
+- `SIMPLE_TIME.make_from_string`: a bare 24-hour `12:MM:SS` was parsed as 12 AM, so noon became midnight (every ISO 8601 round trip through the noon hour shifted by twelve hours). The 12-hour conversion now applies only when an explicit `AM`/`PM` marker is present; `12:30 AM` is still midnight and `12:30 PM` still noon. Found by simple_chat's store equivalence assault.
+
 ## [Unreleased]
 
 ### Changed

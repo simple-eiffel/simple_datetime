@@ -69,7 +69,7 @@ feature {NONE} -- Initialization
 			l_hour, l_minute, l_second: INTEGER
 			l_parts: LIST [STRING]
 			l_str: STRING
-			l_is_pm: BOOLEAN
+			l_is_pm, l_is_am: BOOLEAN
 		do
 			l_str := a_string.twin
 			l_str.left_adjust
@@ -81,6 +81,7 @@ feature {NONE} -- Initialization
 				l_is_pm := True
 				l_str.replace_substring_all ("PM", "")
 			elseif l_str.has_substring ("AM") then
+				l_is_am := True
 				l_str.replace_substring_all ("AM", "")
 			end
 			l_str.left_adjust
@@ -103,10 +104,13 @@ feature {NONE} -- Initialization
 				end
 			end
 
-			-- Handle 12-hour to 24-hour conversion
+			-- Handle 12-hour to 24-hour conversion - ONLY when an AM/PM marker was
+			-- actually present: a bare "12:30:00" is 24-hour text and must stay noon
+			-- (it used to become 00:30:00, which silently shifted every ISO round trip
+			-- through the noon hour by twelve hours).
 			if l_is_pm and l_hour < 12 then
 				l_hour := l_hour + 12
-			elseif not l_is_pm and l_hour = 12 then
+			elseif l_is_am and l_hour = 12 then
 				l_hour := 0
 			end
 
