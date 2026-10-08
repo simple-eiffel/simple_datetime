@@ -29,6 +29,50 @@ feature -- SIMPLE_TIME parsing (regression)
 			assert ("midnight kept", t.hour = 0 and t.minute = 15)
 		end
 
+feature -- SIMPLE_MONOTONIC_CLOCK Tests
+
+	test_monotonic_clock_never_goes_back
+			-- Successive readings never decrease and the frequency is positive.
+		local
+			l_clock: SIMPLE_MONOTONIC_CLOCK
+			l_first, l_second: INTEGER_64
+		do
+			create l_clock
+			assert ("frequency positive", l_clock.ticks_per_second > 0)
+			l_first := l_clock.nanoseconds
+			l_second := l_clock.nanoseconds
+			assert ("not backwards", l_second >= l_first)
+			assert ("first non-negative", l_first >= 0)
+			assert ("milliseconds consistent", l_clock.milliseconds * 1000000 <= l_clock.nanoseconds)
+		end
+
+	test_monotonic_clock_measures_a_busy_wait
+			-- A busy wait of about 20 ms measures between 20 and 2000 ms.
+		local
+			l_clock: SIMPLE_MONOTONIC_CLOCK
+			l_start: INTEGER_64
+		do
+			create l_clock
+			l_start := l_clock.nanoseconds
+			from until l_clock.elapsed_milliseconds (l_start) >= 20 loop
+			end
+			assert ("at least 20 ms", l_clock.elapsed_milliseconds (l_start) >= 20)
+			assert ("under 2 seconds", l_clock.elapsed_milliseconds (l_start) < 2000)
+			assert ("elapsed ns agrees", l_clock.elapsed_nanoseconds (l_start) >= 20000000)
+		end
+
+	test_monotonic_clock_conversion_does_not_overflow
+			-- One day of ticks at 10 MHz converts exactly, and a large tick count does not overflow the intermediate product.
+		local
+			l_clock: SIMPLE_MONOTONIC_CLOCK
+		do
+			create l_clock
+			assert ("one second", l_clock.to_nanoseconds (10000000, 10000000) = 1000000000)
+			assert ("one day", l_clock.to_nanoseconds (864000000000, 10000000) = 86400000000000)
+			assert ("half tick remainder", l_clock.to_nanoseconds (15, 10) = 1500000000)
+			assert ("large count exact", l_clock.to_nanoseconds (9000000000000000, 10000000) = 900000000000000000)
+		end
+
 feature -- SIMPLE_DATE Tests
 
 	test_date_creation

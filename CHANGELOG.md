@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.2] - 2026-10-08
+
+### Added
+
+- `SIMPLE_MONOTONIC_CLOCK`: a high-resolution elapsed-time clock over the Windows performance counter (inline C, no separate C file). `ticks`, `ticks_per_second`, `nanoseconds`, `microseconds`, `milliseconds`, `elapsed_nanoseconds`, `elapsed_milliseconds`, and an overflow-safe `to_nanoseconds`. It never goes backwards and ignores wall-clock changes. Purely additive; no existing class changed. Needed by simple_json's benchmark logger, which had been timing with ISE DATE_TIME.
+
 ## [0.1.1] - 2026-09-01
 
 ### Fixed

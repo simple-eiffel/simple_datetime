@@ -22,6 +22,12 @@ feature {NONE} -- Initialization
 			passed := 0
 			failed := 0
 
+			-- SIMPLE_MONOTONIC_CLOCK tests
+			io.put_string ("SIMPLE_MONOTONIC_CLOCK Tests:%N")
+			run_test (agent tests.test_monotonic_clock_never_goes_back, "test_monotonic_clock_never_goes_back")
+			run_test (agent tests.test_monotonic_clock_measures_a_busy_wait, "test_monotonic_clock_measures_a_busy_wait")
+			run_test (agent tests.test_monotonic_clock_conversion_does_not_overflow, "test_monotonic_clock_conversion_does_not_overflow")
+
 			-- SIMPLE_DATE tests
 			io.put_string ("SIMPLE_DATE Tests:%N")
 			run_test (agent tests.test_time_bare_24h_noon_hour_kept, "test_time_bare_24h_noon_hour_kept")
