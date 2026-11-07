@@ -2,7 +2,7 @@ note
 	description: "[
 		Simple Monotonic Clock - a high-resolution elapsed-time clock.
 
-		Wraps the Windows performance counter (QueryPerformanceCounter). The
+		Wraps the platform monotonic clock (see Clib/simple_datetime_clock.h). The
 		value is a count from an arbitrary starting point: it never goes
 		backwards and is not affected by changes to the wall clock, so it is
 		for measuring elapsed time, not for telling the date.
@@ -101,27 +101,19 @@ feature -- Conversion
 feature {NONE} -- Implementation
 
 	c_counter: INTEGER_64
-			-- Current QueryPerformanceCounter value.
+			-- Current tick count.
 		external
-			"C inline use <windows.h>"
+			"C inline use %"simple_datetime_clock.h%""
 		alias
-			"[
-				LARGE_INTEGER li;
-				QueryPerformanceCounter(&li);
-				return (EIF_INTEGER_64) li.QuadPart;
-			]"
+			"return (EIF_INTEGER_64) sdc_counter ();"
 		end
 
 	c_frequency: INTEGER_64
-			-- QueryPerformanceFrequency value.
+			-- Ticks per second.
 		external
-			"C inline use <windows.h>"
+			"C inline use %"simple_datetime_clock.h%""
 		alias
-			"[
-				LARGE_INTEGER li;
-				QueryPerformanceFrequency(&li);
-				return (EIF_INTEGER_64) li.QuadPart;
-			]"
+			"return (EIF_INTEGER_64) sdc_frequency ();"
 		end
 
 end
